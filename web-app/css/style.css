@@ -10,61 +10,66 @@
 	padding: 0;
 }
 
-body {
-	background-color: azure;
+html, body {
+	background-color: #124E78;
 	font-family: monospace;
-	overflow-x: none;
+	overflow-x: hidden;
+}
+
+.container, header {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .container {
 	margin: 0 auto;
-	display: flex;
-	flex-direction: column;
 	width: 50%;
-	justify-content: center;
-	align-items: center;
 }
 
 a {
 	text-decoration: none;
 }
 
+header {
+	width: 100vw;
+	background-color: azure;
+}
+
 .logo {
-	width: 25em;
+	width: 20em;
 	padding: 2em;
 	margin: 0 auto;
 }
 
-.buttons {
-	width: 50%;
-	display: flex;
-	align-content: center;
-	align-items: center;
-}
-
-.placeholder {
-	padding: 10px;
-	width: 10em;
-	height: 10em;
-}
-
-#admin, #loading {
-	margin: 10px;
-	padding: 10px;
-	color: azure;
-	font-size: 1.5em;
-	text-align: center;
+.content {
+	padding: 35px 25px;
+	width: 100vw;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-#admin {
-	background-color: coral;
+.button a {
+	background-color: #ccc;
+	padding: 10px;
+	margin: 0 50px;
+	border-radius: 10%;
+	text-align: center;
+	font-size: 1.25rem;
+	color: #000;
+	font-weight: bold;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
-#loading {
-	background-color: cadetblue;
+.button > a img {
+	width: 10em;
+	height: 10em;
+	padding: 0 10px;
 }
 
 /* SCHEDULING */

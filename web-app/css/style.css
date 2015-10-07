@@ -16,60 +16,57 @@ html, body {
 	overflow-x: hidden;
 }
 
-.container, header {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+a {
+	text-decoration: none;
+	color: #333;
+	font-weight: bold;
 }
 
 .container {
-	margin: 0 auto;
+	margin: 4.5% auto;
 	width: 50%;
-}
-
-a {
-	text-decoration: none;
+	background-color: #A7BCAF;
+	border-radius: 5%;
 }
 
 header {
-	width: 100vw;
-	background-color: azure;
+	width: 100%;
+	padding: 2.5em 0;
+	text-align: center;
 }
 
 .logo {
-	width: 20em;
-	padding: 2em;
+	display: block;
 	margin: 0 auto;
+	width: 20em;
 }
 
 .content {
-	padding: 35px 25px;
-	width: 100vw;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	height: 15em;
 }
 
 .button a {
-	background-color: #ccc;
-	padding: 10px;
-	margin: 0 50px;
-	border-radius: 10%;
+	display: block;
+	width: 12em;
+	height: 12em;
 	text-align: center;
-	font-size: 1.25rem;
-	color: #000;
-	font-weight: bold;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
 }
 
 .button > a img {
-	width: 10em;
-	height: 10em;
-	padding: 0 10px;
+	width: 100%;
+	background-color: #ccc;
+	padding: 3%;
+	border-radius: 10%;
+}
+
+#admin {
+	float: left;
+	margin-left: 20%;
+}
+
+#loading {
+	float: right;
+	margin-right: 25%;
 }
 
 /* SCHEDULING */

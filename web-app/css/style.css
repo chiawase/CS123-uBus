@@ -5,15 +5,19 @@
 	Group D : Ian De La Cruz, Pearl Santos, Chi Señires, EJ Villadarez
 */
 
-* {
+/*	------------	*/
+/*			MAIN  		*/
+/*	------------	*/
+*, *:after, *:before {
 	margin: 0;
 	padding: 0;
-}
+  box-sizing: border-box; }
 
 html, body {
+  font-size: 10px;
 	background-color: #124E78;
 	font-family: monospace;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 a {
@@ -22,6 +26,9 @@ a {
 	font-weight: bold;
 }
 
+/*	------------	*/
+/*	INDEX.html		*/
+/*	------------	*/
 .container {
 	margin: 4.5% auto;
 	width: 50%;
@@ -61,39 +68,72 @@ header {
 
 #admin {
 	float: left;
-	margin-left: 20%;
 }
 
 #loading {
 	float: right;
-	margin-right: 25%;
+	margin-right: 30%;
 }
 
-/* SCHEDULING */
-
+/*	--------------	*/
+/*	SCHEDULE.html		*/
+/*	--------------	*/
 nav {
-	background-color: dimgray;
-	height: 120px;
-	display: flex;
-	flex-direction: column;
+	background-color: #999;
+	height: 115px;
 }
 
 
 .brand img {
+	float: left;
 	width: 100px;
 	margin: 10px;
 }
 
 .align-right {
-	align-self: flex-end;
+	float: right;
+	margin: 20px 10px;
 }
 
-#add-schedule {
-	font-size: 5em;
-	padding: 10px;
-	margin-right: 5%;
-	width: 100px;
-	height: 100px;
-	
-	background-color: green;
+.nav a {
+	display: inline-block;
+	padding: 20px 10px;
+	margin: auto 0;
+}
+
+.wrapper {
+	width: 60%;
+	margin: 0 auto;
+}
+
+.content {
+	display: block;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.title {
+	margin: 2.5% 5%;
+	color: #f0f0c9;
+}
+
+	.title > img {
+		width: 75px;
+		background-color: #ccc;
+		padding: 0.75%;
+		border-radius: 10%;
+		float: left;
+		margin-left: -9em;
+	}
+
+/* Temporary */
+.placeholder {
+	width: 50px;
+	height: 50px;
+	background-color: aqua;
+}
+
+.clearfix {
+	display: block;
+	clear: both;
 }

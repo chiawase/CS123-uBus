@@ -45,12 +45,12 @@ public class ListViewActivity extends ListActivity {
 //        testObject.put("foo", "bar");
 //        testObject.saveInBackground();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("BusSchedule");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Schedule");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> schedule, ParseException e) {
                 if (e == null) {
                     Log.d("Brand", "Retrieved " + schedule.size() + " Brands");
-                     SampleCustomAdapter adapter = new SampleCustomAdapter(samplelist);
+                     SampleCustomAdapter adapter = new SampleCustomAdapter(schedule);
         setListAdapter(adapter);
 
         ListView lv = (ListView) findViewById(android.R.id.list);
@@ -101,9 +101,10 @@ public class ListViewActivity extends ListActivity {
 
 
         busSchedule = getSharedPreferences("bus", Context.MODE_PRIVATE);
-
-       
-        load = 100.00;
+	
+ParseUser user = ParseUser.getCurrentUser();
+if(user!=null){
+        load = (double) user.getString("load");
 
         TextView setLoad = (TextView) findViewById(R.id.load);
         setLoad.setText(Double.toString(load));

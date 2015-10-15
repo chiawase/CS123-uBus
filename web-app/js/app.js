@@ -1,4 +1,4 @@
-Parse.initialize("VHNmZxSO2pSrd2KjsjW6a8QUdJYZLFS6Il4WDrQM", "s36ClRKw9cXstmvT9Z2L6d5H9CaoUc5V1R9vQ2kP");
+Parse.initialize("waBL5APV9kwdeqnm1kQ34BivGHQjjHQr1I58ubmJ", "01foVLqzLntdIIplsOJCOkfCGTL63wti1rcUlVCD");
 
 var Schedule = Parse.Object.extend("Schedule");
 

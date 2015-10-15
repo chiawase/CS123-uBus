@@ -46,32 +46,11 @@ public class ListViewActivity extends ListActivity {
 //        testObject.saveInBackground();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("BusSchedule");
-        query.orderByAscending("busName");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> schedule, ParseException e) {
                 if (e == null) {
                     Log.d("Brand", "Retrieved " + schedule.size() + " Brands");
-                    for (ParseObject s : schedule) {
-                        //BusSchedule lol = new BusSchedule(s.get("busName"), s.get("plateNum"),)
-                        // use s.get('columnName') to access the properties of the Deals object.
-                    }
-                } else {
-
-                }
-            }
-        });
-
-//        ArrayList<BusSchedule> sampleList = new ArrayList<BusSchedule>();
-//        for(int i=0; i<10; i++){
-//        	BusSchedule sample = new BusSchedule("Bus1", "UXC 123", "Manila",
-//        			"Malolos", "4:00PM", 30, 7.50);
-//        	sampleList.add(sample);
-//        }
-
-
-        busSchedule = getSharedPreferences("bus", Context.MODE_PRIVATE);
-
-        SampleCustomAdapter adapter = new SampleCustomAdapter(samplelist);
+                     SampleCustomAdapter adapter = new SampleCustomAdapter(samplelist);
         setListAdapter(adapter);
 
         ListView lv = (ListView) findViewById(android.R.id.list);
@@ -107,6 +86,23 @@ public class ListViewActivity extends ListActivity {
             }
         });
 
+                } else {
+
+                }
+            }
+        });
+
+//        ArrayList<BusSchedule> sampleList = new ArrayList<BusSchedule>();
+//        for(int i=0; i<10; i++){
+//        	BusSchedule sample = new BusSchedule("Bus1", "UXC 123", "Manila",
+//        			"Malolos", "4:00PM", 30, 7.50);
+//        	sampleList.add(sample);
+//        }
+
+
+        busSchedule = getSharedPreferences("bus", Context.MODE_PRIVATE);
+
+       
         load = 100.00;
 
         TextView setLoad = (TextView) findViewById(R.id.load);
@@ -116,9 +112,9 @@ public class ListViewActivity extends ListActivity {
     }
     private class SampleCustomAdapter extends BaseAdapter {
 
-        private ArrayList<BusSchedule> internalList;
+        private List<ParseObject> internalList;
 
-        public SampleCustomAdapter(ArrayList<BusSchedule> contacts)
+        public SampleCustomAdapter(List<ParseObject> contacts)
         {
             internalList = contacts;
         }
@@ -174,15 +170,15 @@ public class ListViewActivity extends ListActivity {
             TextView cost = (TextView) view.findViewById(R.id.cost);
 
             // extract the object that will fill these
-            BusSchedule contact = internalList.get(position);
+            ParseObject contact = internalList.get(position);
 
-            busNum.setText(contact.getBusNum());
-            plateNum.setText(contact.getPlateNum());
-            from.setText(contact.getFrom());
-            to.setText(contact.getTo());
-            depTime.setText(contact.getDepTime());
-            seatsAvailable.setText(Integer.toString(contact.getSeatsAvailable()));
-            cost.setText(Double.toString(contact.getCost()));
+            busNum.setText(contact.getString("busCompany"));
+            plateNum.setText(contact.getString("busPlate"));
+            from.setText(contact.getString("startingTerminal"));
+            to.setText(contact.getString("destination"));
+            depTime.setText(contact.getString("departure"));
+            seatsAvailable.setText(contact.getString("seatsAmount"));
+            cost.setText(contact.getCost("ticketPrice"));
 
 
             // return the view

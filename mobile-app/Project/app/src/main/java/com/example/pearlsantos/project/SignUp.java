@@ -1,29 +1,33 @@
 package com.example.pearlsantos.project;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
-public class Login_Screen extends AppCompatActivity {
-    //public final static String EXTRA_MESSAGE = ;
+/**
+ * Created by Pearl Santos on 10/15/2015.
+ */
+public class SignUp extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login__screen);
+        setContentView(R.layout.sign_up);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        actionBar.setTitle("Sign Up");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login__screen, menu);
+        getMenuInflater().inflate(R.menu.menu_action_bar_attempt, menu);
         return true;
     }
 
@@ -42,20 +46,12 @@ public class Login_Screen extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void submit(View view){
-        Intent intent = new Intent(this, ActionBarAttempt.class);
+    public void okay(View view){
+        Intent intent = new Intent(this, Login_Screen.class);
         //EditText editText = (EditText) findViewById(R.id.name);
         //String message = editText.getText().toString();
         //intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
 
-    }
-
-    public void newUser(View view){
-        Intent intent = new Intent(this, SignUp.class);
-        //EditText editText = (EditText) findViewById(R.id.name);
-        //String message = editText.getText().toString();
-        //intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
 
     }

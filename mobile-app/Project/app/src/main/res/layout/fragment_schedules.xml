@@ -1,20 +1,32 @@
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- The main content view -->
-    <FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <!-- The navigation drawer -->
-    <ListView android:id="@+id/left_drawer"
-        android:layout_width="320dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
-</android.support.v4.widget.DrawerLayout>
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <!--
+    **************************IMPORTANT***********************************
+     change this id attribute values as "frag2_icon" and "frag2_text" for
+     fragment_layout_two.xml and "frag3_icon" and "frag3_text" for
+     fragment_layout_three.xml
+    **********************************************************************
+      -->
+
+    <TextView
+        android:id="@+id/frag3_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Available Schedules"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1" />
+
+
+</LinearLayout>

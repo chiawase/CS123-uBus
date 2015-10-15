@@ -1,99 +1,109 @@
-/*
-	Main CSS styles for main uBus web app.
-
-	for CS 123 Group Project.
-	Group D : Ian De La Cruz, Pearl Santos, Chi Señires, EJ Villadarez
-*/
-
-* {
+html, body {
 	margin: 0;
 	padding: 0;
 }
 
-html, body {
-	background-color: #124E78;
-	font-family: monospace;
-	overflow-x: hidden;
-}
-
-a {
-	text-decoration: none;
-	color: #333;
-	font-weight: bold;
-}
-
-.container {
-	margin: 4.5% auto;
-	width: 50%;
-	background-color: #A7BCAF;
-	border-radius: 5%;
-}
-
-header {
-	width: 100%;
-	padding: 2.5em 0;
-	text-align: center;
-}
-
-.logo {
-	display: block;
-	margin: 0 auto;
-	width: 20em;
-}
-
-.content {
-	height: 15em;
-}
-
-.button a {
-	display: block;
-	width: 12em;
-	height: 12em;
-	text-align: center;
-}
-
-.button > a img {
-	width: 100%;
-	background-color: #ccc;
-	padding: 3%;
-	border-radius: 10%;
-}
-
-#admin {
-	float: left;
-	margin-left: 20%;
-}
-
-#loading {
-	float: right;
-	margin-right: 25%;
-}
-
-/* SCHEDULING */
-
 nav {
-	background-color: dimgray;
-	height: 120px;
-	display: flex;
-	flex-direction: column;
+	position: relative;
+	height: 60px;
+	background-color: #124E78;
 }
 
-
-.brand img {
-	width: 100px;
-	margin: 10px;
-}
-
-.align-right {
-	align-self: flex-end;
-}
-
-#add-schedule {
-	font-size: 5em;
+nav a {
+	display: inline-block;
+	height: 100%;
 	padding: 10px;
-	margin-right: 5%;
-	width: 100px;
-	height: 100px;
+	position: relative;
+	float:right;
+}
+
+nav a:first-child {
+	float: left;
+}
+
+.button {
+	display: inline-block;
+	width: 45% !important;
+	text-align:center;
+	padding: 0 !important;
+}
+
+.button:first-child {
+	margin-right: 15px;
+}
 	
-	background-color: green;
+	.button a {
+		display: block;
+		width: 100%;
+		text-decoration: none;
+		color: black;
+	}
+
+	.button img {
+		display:block;
+		width:80%;
+		margin:0 5% 0 15%;
+	}
+
+.wrapper {
+	width: 90%;
+	margin: 0 auto;
+	padding-top: 20px;
+}
+
+.title {
+	text-align: center;
+}
+
+	.title h1{
+		display: inline-block;
+	}
+
+.card {
+	box-shadow:0 1px 2px #aaa;
+	/*height: 300px;*/
+	padding: 2rem;
+	border-radius:3px;
+	margin: 0 auto;
+	width: 60%;
+}
+
+	.card img {
+		display: inline-block;
+		position: relative;
+		top: 0;
+		left: 0;
+	}
+
+	.card form {
+		display: inline-block;
+		width: calc(100% - 80px);
+	}
+
+	.card_schedule fieldset {
+		display: inline-block;
+		width: 30%;
+		border:none;
+	}
+
+	.card_schedule fieldset:nth-child(5) {
+		width: 80%;
+	}
+
+	.card_schedule fieldset:nth-child(n+6):nth-child(-n+8) {
+		width: 40%;
+	}
+
+	.card_schedule fieldset:nth-child(n+5):nth-child(-n+8) input {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+		margin-left: 10px;
+		border-top:0;
+		border-left: 0;
+		border-right: 0;
+	}
+
+.row {
+	display: block;
 }

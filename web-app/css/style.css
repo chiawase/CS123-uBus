@@ -84,6 +84,14 @@ nav a:first-child {
 		display: inline-block;
 		width: 30%;
 		border:none;
+		margin-bottom: 20px;
+	}
+
+	.card_schedule fieldset input[type="text"], .card_schedule fieldset input[type="datetime-local"] {
+		font-size: 1em;
+		border-top:0;
+		border-left: 0;
+		border-right: 0;
 	}
 
 	.card_schedule fieldset:nth-child(5) {
@@ -91,10 +99,11 @@ nav a:first-child {
 	}
 
 	.card_schedule fieldset:nth-child(n+6):nth-child(-n+8) {
+		display: block;
 		width: 40%;
 	}
 
-	.card_schedule fieldset:nth-child(n+5):nth-child(-n+8) input {
+	.card_schedule fieldset:nth-child(n+5):nth-child(-n+8) input[type="text"] {
 		position: relative;
 		top: 50%;
 		transform: translateY(-50%);
@@ -103,6 +112,10 @@ nav a:first-child {
 		border-left: 0;
 		border-right: 0;
 	}
+
+input[type="text"] {
+
+}
 
 .row {
 	display: block;

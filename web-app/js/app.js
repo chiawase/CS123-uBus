@@ -2,6 +2,30 @@ Parse.initialize("waBL5APV9kwdeqnm1kQ34BivGHQjjHQr1I58ubmJ", "01foVLqzLntdIIplsO
 
 var Schedule = Parse.Object.extend("Schedule");
 
+$('#reload').submit(function(){
+	event.preventDefault();
+
+	var cell = document.getElementById("cellphone_number").value,
+		amt = document.getElementById("amount").value;
+
+	var query = new Parse.Query(User);
+	query.equalTo("cellphoneNumber", cell);
+	query.find({
+		success: function(results){
+			for (var i = 0; i < results.length; i++) {
+		      var object = results[i];
+		      alert(object.get('load'));
+		    }
+		},
+		error: function(error){
+			alert("Could not find account");
+		}
+	});
+	//search for cell number
+	//update amount value
+	//save
+});
+
 
 
 $("#create_schedule").submit(function(event){

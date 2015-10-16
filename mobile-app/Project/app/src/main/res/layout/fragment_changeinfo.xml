@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     >
 
     <!--
@@ -12,19 +12,49 @@
      fragment_layout_three.xml
     **********************************************************************
       -->
-
-    <ImageView
-        android:id="@+id/frag1_icon"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_height="wrap_content"
-        />
-
+        android:layout_width="match_parent"
+        android:layout_weight="1">
     <TextView
+        android:gravity="center"
         android:id="@+id/frag1_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Hi, Hello"/>
+        android:text="Change Info"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="20"
+            android:id="@+id/editText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_weight="1">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2"
+            android:ems="20"
+            android:text="Number" />
+
+     </LinearLayout>
 
 </LinearLayout>

@@ -1,139 +1,109 @@
-/*
-	Main CSS styles for main uBus web app.
-
-	for CS 123 Group Project.
-	Group D : Ian De La Cruz, Pearl Santos, Chi Señires, EJ Villadarez
-*/
-
-/*	------------	*/
-/*			MAIN  		*/
-/*	------------	*/
-*, *:after, *:before {
+html, body {
 	margin: 0;
 	padding: 0;
-  box-sizing: border-box; }
-
-html, body {
-  font-size: 10px;
-	background-color: #124E78;
-	font-family: monospace;
-	overflow: hidden;
 }
 
-a {
-	text-decoration: none;
-	color: #333;
-	font-weight: bold;
-}
-
-/*	------------	*/
-/*	INDEX.html		*/
-/*	------------	*/
-.container {
-	margin: 4.5% auto;
-	width: 50%;
-	background-color: #A7BCAF;
-	border-radius: 5%;
-}
-
-header {
-	width: 100%;
-	padding: 2.5em 0;
-	text-align: center;
-}
-
-.logo {
-	display: block;
-	margin: 0 auto;
-	width: 20em;
-}
-
-.content {
-	height: 15em;
-}
-
-.button a {
-	display: block;
-	width: 12em;
-	height: 12em;
-	text-align: center;
-}
-
-.button > a img {
-	width: 100%;
-	background-color: #ccc;
-	padding: 3%;
-	border-radius: 10%;
-}
-
-#admin {
-	float: left;
-}
-
-#loading {
-	float: right;
-	margin-right: 30%;
-}
-
-/*	--------------	*/
-/*	SCHEDULE.html		*/
-/*	--------------	*/
 nav {
-	background-color: #999;
-	height: 115px;
+	position: relative;
+	height: 60px;
+	background-color: #124E78;
 }
 
-
-.brand img {
-	float: left;
-	width: 100px;
-	margin: 10px;
-}
-
-.align-right {
-	float: right;
-	margin: 20px 10px;
-}
-
-.nav a {
+nav a {
 	display: inline-block;
-	padding: 20px 10px;
-	margin: auto 0;
+	height: 100%;
+	padding: 10px;
+	position: relative;
+	float:right;
 }
+
+nav a:first-child {
+	float: left;
+}
+
+.button {
+	display: inline-block;
+	width: 45% !important;
+	text-align:center;
+	padding: 0 !important;
+}
+
+.button:first-child {
+	margin-right: 15px;
+}
+	
+	.button a {
+		display: block;
+		width: 100%;
+		text-decoration: none;
+		color: black;
+	}
+
+	.button img {
+		display:block;
+		width:80%;
+		margin:0 5% 0 15%;
+	}
 
 .wrapper {
-	width: 60%;
+	width: 90%;
 	margin: 0 auto;
-}
-
-.content {
-	display: block;
-	width: 100%;
-	margin: 0 auto;
+	padding-top: 20px;
 }
 
 .title {
-	margin: 2.5% 5%;
-	color: #f0f0c9;
+	text-align: center;
 }
 
-	.title > img {
-		width: 75px;
-		background-color: #ccc;
-		padding: 0.75%;
-		border-radius: 10%;
-		float: left;
-		margin-left: -9em;
+	.title h1{
+		display: inline-block;
 	}
 
-/* Temporary */
-.placeholder {
-	width: 50px;
-	height: 50px;
-	background-color: aqua;
+.card {
+	box-shadow:0 1px 2px #aaa;
+	/*height: 300px;*/
+	padding: 2rem;
+	border-radius:3px;
+	margin: 0 auto;
+	width: 60%;
 }
 
-.clearfix {
+	.card img {
+		display: inline-block;
+		position: relative;
+		top: 0;
+		left: 0;
+	}
+
+	.card form {
+		display: inline-block;
+		width: calc(100% - 80px);
+	}
+
+	.card_schedule fieldset {
+		display: inline-block;
+		width: 30%;
+		border:none;
+	}
+
+	.card_schedule fieldset:nth-child(5) {
+		width: 80%;
+	}
+
+	.card_schedule fieldset:nth-child(n+6):nth-child(-n+8) {
+		width: 40%;
+	}
+
+	.card_schedule fieldset:nth-child(n+5):nth-child(-n+8) input {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+		margin-left: 10px;
+		border-top:0;
+		border-left: 0;
+		border-right: 0;
+	}
+
+.row {
 	display: block;
-	clear: both;
 }

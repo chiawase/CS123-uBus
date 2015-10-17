@@ -6,15 +6,41 @@ $('#reload').submit(function(){
 	event.preventDefault();
 
 	var cell = document.getElementById("cellphone_number").value,
-		amt = document.getElementById("amount").value;
+		amt = document.getElementById("amount").value,
+		intAmt = parseInt(amt),
+		row = document.getElementById("load_card");
 
-	var query = new Parse.Query(User);
-	query.equalTo("cellphoneNumber", cell);
+	var accountDetailDiv = document.createElement("div"),
+		accountName = document.createElement("p"),
+		accountAmt = document.createElement("p");
+		
+
+	var query = new Parse.Query(Parse.User);
+	query.equalTo("cellPhone", cell);
 	query.find({
 		success: function(results){
 			for (var i = 0; i < results.length; i++) {
 		      var object = results[i];
 		      alert(object.get('load'));
+		      accountNameText = document.createTextNode("Name: " + object.get('username'));
+		      accountAmtText = document.createTextNode("Previous Balance: " + object.get('load'));
+		      accountName.appendChild(accountNameText);
+		      accountAmt.appendChild(accountAmtText);
+		      accountDetailDiv.appendChild(accountName);
+		      accountDetailDiv.appendChild(accountAmt);
+		      row.appendChild(accountDetailDiv);
+
+		      var intLoad = parseInt(object.get('load'));
+		      var newLoad = intLoad+intAmt;
+		      object.set("load", newLoad.toString());
+		      object.save(null,{
+		      	success: function(object){
+		      		console.log("Saved.");
+		      	},
+		      	error: function(error){
+		      		console.log("Error " + error);
+		      	}
+		      });
 		    }
 		},
 		error: function(error){

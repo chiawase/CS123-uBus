@@ -18,7 +18,7 @@ import com.parse.ParseUser;
 
 public class Login_Screen extends AppCompatActivity {
     //public final static String EXTRA_MESSAGE = ;
-    String name, phone;
+    String name, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +38,10 @@ public class Login_Screen extends AppCompatActivity {
                 EditText n = (EditText) findViewById(R.id.name);
                 name = n.getText().toString();
 
-                EditText p = (EditText) findViewById(R.id.phone);
-                phone = p.getText().toString();
+                EditText p = (EditText) findViewById(R.id.password);
+                password = p.getText().toString();
 
-                ParseUser.logInInBackground(name, phone, new LogInCallback() {
+                ParseUser.logInInBackground(name, password, new LogInCallback() {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
                             Intent intent = new Intent(Login_Screen.this, ActionBarAttempt.class);

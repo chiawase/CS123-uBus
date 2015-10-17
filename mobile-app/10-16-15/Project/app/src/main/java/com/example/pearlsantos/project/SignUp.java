@@ -39,31 +39,37 @@ public class SignUp extends AppCompatActivity {
                 EditText n = (EditText) findViewById(R.id.name);
                 String name = n.getText().toString();
 
-                EditText p = (EditText) findViewById(R.id.phone);
-                String phone = p.getText().toString();
+                EditText pa = (EditText) findViewById(R.id.password);
+                String password = pa.getText().toString();
+
+                EditText ph = (EditText) findViewById(R.id.phone);
+                String phone = ph.getText().toString();
 
                 ParseUser user = new ParseUser();
                 user.setUsername(name);
-                user.setPassword(phone);
+                user.setPassword(password);
+                user.put("cellPhone", phone);
                 user.put("load", "0");
 
                 user.signUpInBackground(new SignUpCallback() {
                     public void done(ParseException e) {
                         if (e == null) {
-                            Intent intent = new Intent(SignUp.this, Login_Screen.class);
+                            Intent intent = new Intent(SignUp.this, ActionBarAttempt.class);
                             //EditText editText = (EditText) findViewById(R.id.name);
                             //String message = editText.getText().toString();
                             //intent.putExtra(EXTRA_MESSAGE, message);
                             startActivity(intent);
 
+
                         } else {
                             System.out.println("DIDN'T WORK");
                             // Sign up didn't succeed. Look at the ParseException
                             Log.d("WHAT HAPPENED", e.getMessage());
-                            // to figure out what went wrong
+                            Toast.makeText(SignUp.this, "No internet connection", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
+
             }
         });
     }

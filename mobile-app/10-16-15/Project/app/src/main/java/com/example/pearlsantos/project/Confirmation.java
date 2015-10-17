@@ -78,9 +78,10 @@ public class Confirmation extends Dialog{
                 // TODO Auto-generated method stub
                 ParseUser user = ParseUser.getCurrentUser();
                 if(user!=null) {
-                    double load = (double) user.get("load");
-                    if(load>=totalCost){
-                        user.put("load", load-totalCost);
+                    String load = user.getString("load");
+                    if(Double.parseDouble(load)>=totalCost){
+                        user.put("load", Double.parseDouble(load)-totalCost);
+                        user.saveInBackground();
                         //update noOfseats in buses
                         //send receipt
                         dismiss();

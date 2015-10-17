@@ -48,10 +48,9 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:text="Cellphone Number"
+        android:text="Password"
         android:ems="10"
-        android:id="@+id/phone"
+        android:id="@+id/password"
         android:layout_weight="1"
         android:layout_gravity="center_horizontal" />
 

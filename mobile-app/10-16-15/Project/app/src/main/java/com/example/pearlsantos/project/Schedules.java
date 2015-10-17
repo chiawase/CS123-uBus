@@ -33,7 +33,6 @@ public class Schedules extends Fragment {
     String load;
     View rootView;
     SampleCustomAdapter adapter;
-    List<ParseObject> schedule;
     ListView lv;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -51,13 +50,10 @@ public class Schedules extends Fragment {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Schedule");
         query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> schedule1, ParseException e) {
+            public void done(List<ParseObject> schedule, ParseException e) {
                 if (e == null) {
-                    Log.d("Brand", "Retrieved " + schedule1.size() + " Brands");
+                    Log.d("Brand", "Retrieved " + schedule.size() + " Brands");
 
-                    schedule = schedule1;
-
-                    //ListViewActivity lv = new ListViewActivity();
 
                     lv = (ListView) rootView.findViewById(R.id.list);
                     SampleCustomAdapter adapter2 = new SampleCustomAdapter(schedule);
@@ -70,7 +66,8 @@ public class Schedules extends Fragment {
                             busSchedule = rootView.getContext().getSharedPreferences("bus", Context.MODE_PRIVATE);
 
                             SharedPreferences.Editor edit2 = busSchedule.edit();
-                          //  edit2.putString("ID", adapter.getObjectIDOfItem());
+                            //System.out.println(adapter.getObjectIDOfItem());
+                           // edit2.putString("ID", adapter.getObjectIDOfItem());
 
                             TextView busNum = (TextView) rootView.findViewById(R.id.busNum);
                             TextView plateNum = (TextView) rootView.findViewById(R.id.plateNum);

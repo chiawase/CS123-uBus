@@ -87,8 +87,18 @@ nav a:first-child {
 		left: 0;
 	}
 
+		.row {
+			position: relative;
+		}
+
+		.card .img-placeholder {
+			position: absolute;
+			top: 0;
+		}
+
 	.card form {
 		display: inline-block;
+		margin-left: 80px;
 		width: calc(100% - 80px);
 	}
 

@@ -10,15 +10,15 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".Login_Screen"
     >
     <LinearLayout
-        android:layout_width="263dp"
-        android:layout_height="236dp"
-        android:layout_weight="0.5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_gravity="center">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/logo"
+            android:src="@drawable/ubus_logo3"
             android:id="@+id/imageView"
             android:layout_gravity="center"
             />
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Registration"
+        android:text="Reserve your tickets."
         android:layout_gravity="center"
         android:id="@+id/textView"
         android:layout_weight="2"
@@ -41,20 +41,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/name"
-        android:text="Name"
+        android:text="username/cellphone no."
         android:layout_weight="1"
         android:layout_gravity="center_horizontal" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Password"
+        android:text="password"
         android:ems="10"
         android:id="@+id/password"
         android:layout_weight="1"
         android:layout_gravity="center_horizontal" />
 
-    <LinearLayout
+    <!--LinearLayout
         android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
             android:id="@+id/checkBox"
             android:gravity="left"
             android:layout_gravity="center"/>
-    </LinearLayout>
+    </LinearLayout-->
 
     <LinearLayout
         android:orientation="vertical"
@@ -79,18 +79,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="SUBMIT"
+            android:text="LOGIN"
+            android:onClick="submit"
             android:layout_weight="2"
             android:id="@+id/submit" />
 
-        <Button
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Not yet a member? Sign up"
             android:layout_gravity="center"
-            android:text="NEW USER"
-            android:onClick="newUser"
+            android:id="@+id/notYetAMember"
             android:layout_weight="2"
-            android:id="@+id/newUser" />
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="ABOUT"
+            android:layout_gravity="center"
+            android:id="@+id/about"
+            android:layout_weight="2"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
     </LinearLayout>
 
 </LinearLayout>

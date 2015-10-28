@@ -30,7 +30,7 @@ public class ReservingSeats extends Dialog {
         busSchedule = getContext().getSharedPreferences("bus", Context.MODE_PRIVATE);
         this.setTitle("Reserve Seat(s) for Bus");
 
-        setContentView(R.layout.activity_reserving_seats);
+        setContentView(R.layout.number_of_tickets);
 
         String bN = busSchedule.getString("busNum", "").trim();
         String pN = busSchedule.getString("plateNum", "").trim();

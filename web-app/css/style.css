@@ -3,6 +3,10 @@ html, body {
 	padding: 0;
 }
 
+body {
+	font-family: "Courier New", Courier, monospace;
+}
+
 nav {
 	position: relative;
 	height: 60px;
@@ -20,6 +24,14 @@ nav a {
 nav a:first-child {
 	float: left;
 }
+
+	nav > h1 {
+		display: inline-block;
+		margin: 0;
+		padding-top: 15px;
+		padding-left: 15px;
+		color: #fff;
+	}
 
 .button {
 	display: inline-block;

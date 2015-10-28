@@ -113,6 +113,23 @@ nav a:first-child {
 		border-right: 0;
 	}
 
+.card_adminAccount fieldset  {
+	display: inline-block;
+	width: 40%;
+	border: none;
+	margin-bottom: 20px;
+}
+
+.card_adminAccount input[type="text"], .card_adminAccount input[type="password"] {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+		margin-left: 15px;
+		border-top:0;
+		border-left: 0;
+		border-right: 0;
+}
+
 input[type="text"] {
 
 }

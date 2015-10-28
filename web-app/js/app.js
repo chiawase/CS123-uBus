@@ -2,7 +2,7 @@ Parse.initialize("waBL5APV9kwdeqnm1kQ34BivGHQjjHQr1I58ubmJ", "01foVLqzLntdIIplsO
 
 var Schedule = Parse.Object.extend("Schedule");
 
-$('#reload').submit(function(){
+$('#reload').submit(function(event){
 	event.preventDefault();
 
 	var cell = document.getElementById("cellphone_number").value,

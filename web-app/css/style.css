@@ -3,6 +3,10 @@ html, body {
 	padding: 0;
 }
 
+body {
+	font-family: "Courier New", Courier, monospace;
+}
+
 nav {
 	position: relative;
 	height: 60px;
@@ -20,6 +24,14 @@ nav a {
 nav a:first-child {
 	float: left;
 }
+
+	nav > h1 {
+		display: inline-block;
+		margin: 0;
+		padding-top: 15px;
+		padding-left: 15px;
+		color: #fff;
+	}
 
 .button {
 	display: inline-block;
@@ -75,8 +87,18 @@ nav a:first-child {
 		left: 0;
 	}
 
+		.row {
+			position: relative;
+		}
+
+		.card .img-placeholder {
+			position: absolute;
+			top: 0;
+		}
+
 	.card form {
 		display: inline-block;
+		margin-left: 80px;
 		width: calc(100% - 80px);
 	}
 
@@ -112,6 +134,23 @@ nav a:first-child {
 		border-left: 0;
 		border-right: 0;
 	}
+
+.card_adminAccount fieldset  {
+	display: inline-block;
+	width: 40%;
+	border: none;
+	margin-bottom: 20px;
+}
+
+.card_adminAccount input[type="text"], .card_adminAccount input[type="password"] {
+		position: relative;
+		top: 50%;
+		transform: translateY(-50%);
+		margin-left: 15px;
+		border-top:0;
+		border-left: 0;
+		border-right: 0;
+}
 
 input[type="text"] {
 

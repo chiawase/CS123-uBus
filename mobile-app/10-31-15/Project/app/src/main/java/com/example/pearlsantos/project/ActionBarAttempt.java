@@ -57,6 +57,7 @@ public class ActionBarAttempt extends AppCompatActivity {
             mTitle = mDrawerTitle = "About";
             options = getResources().getStringArray(R.array.options);
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
 

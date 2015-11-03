@@ -12,7 +12,7 @@
         <item>Edit Profile</item>
         <item>View Past Trips</item>
         <item>Settings</item>
-        <item>About</item>
+        <item>Log Out</item>
     </string-array>
 
     <string-array name="list">

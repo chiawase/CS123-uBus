@@ -8,6 +8,7 @@
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string-array name="options">
+        <item>Search</item>
         <item>Schedules</item>
         <item>Edit Profile</item>
         <item>View Past Trips</item>
@@ -24,4 +25,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_change_info_fragment">ChangeInfoFragment</string>
     <string name="title_activity_past_trips">PastTrips</string>
+    <string name="title_activity_search">Search</string>
+    <string name="title_activity_time_picker">TimePicker</string>
 </resources>

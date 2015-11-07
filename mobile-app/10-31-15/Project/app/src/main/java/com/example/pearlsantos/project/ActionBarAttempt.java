@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
@@ -122,32 +123,32 @@ public class ActionBarAttempt extends AppCompatActivity {
             if (mDrawerToggle.onOptionsItemSelected(item)) {
                 return true;
             }
-            Fragment fragment = null;
-            Bundle args = new Bundle();
-            FragmentManager fragmentManager = null;
-            // Handle action buttons
-            switch(item.getItemId()) {
-                case R.id.action_search:
-                    //insert what needs to be done when chosen
-                    return true;
-                case R.id.action_aboutUs:
-                    fragment = new About();
-                    fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-                    return true;
-                case R.id.action_help:
-                    fragment = new Help();
-                    fragmentManager = getSupportFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-                    return true;
-                case R.id.action_settings:
-                    //insert what needs to be done when chosen
-                    return true;
-                default:
-                    return super.onOptionsItemSelected(item);
-            }
+//            Fragment fragment = null;
+//            Bundle args = new Bundle();
+//            FragmentManager fragmentManager = null;
+//            // Handle action buttons
+//            switch(item.getItemId()) {
+//                case R.id.action_search:
+//                    //insert what needs to be done when chosen
+//                    return true;
+//                case R.id.action_aboutUs:
+//                    fragment = new About();
+//                    fragmentManager = getSupportFragmentManager();
+//                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+//                    return true;
+//                case R.id.action_help:
+//                    fragment = new Help();
+//                    fragmentManager = getSupportFragmentManager();
+//                    fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+//                    return true;
+//                case R.id.action_settings:
+//                    //insert what needs to be done when chosen
+//                    return true;
+//                default:
+//                    return super.onOptionsItemSelected(item);
+//            }
 
-
+            return true;
         }
 
     /* The click listner for ListView in the navigation drawer */
@@ -165,19 +166,24 @@ public class ActionBarAttempt extends AppCompatActivity {
 
         switch(position){
             case 0:
-                fragment = new Schedules();
+                Fragment fa = new SearchFragment();
                 break;
             case 1:
-                fragment = new ChangeInfoFragment();
+                fragment = new Schedules();
                 break;
             case 2:
-                fragment = new PastTrips();
+                fragment = new ChangeInfoFragment();
                 break;
             case 3:
-                fragment = new Help();
+                fragment = new PastTrips();
                 break;
             case 4:
-                fragment = new About();//must be changed for dialog
+                //settings
+                fragment = new Help();
+                break;
+            case 5:
+                //logout
+                fragment = new Help();
                 break;
             default:
                 break;

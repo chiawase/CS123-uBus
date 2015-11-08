@@ -48,7 +48,7 @@ public class Confirmation extends Dialog{
             t = busSchedule.getString("to", "").trim();
             dT = busSchedule.getString("depTime", "").trim();
             sA = busSchedule.getString("seatsAvailable", "").trim();
-            //c = busSchedule.getString("cost", "").trim();
+            c = busSchedule.getString("cost", "").trim();
             nOS = busSchedule.getString("noOfSeats", "").trim();
             a = busSchedule.getString("arrival", "").trim();
         }
@@ -59,7 +59,6 @@ public class Confirmation extends Dialog{
         TextView from = (TextView) findViewById(R.id.from);
         TextView to = (TextView) findViewById(R.id.to);
         TextView depTime = (TextView) findViewById(R.id.depTime);
-        TextView seatsAvailable = (TextView) findViewById(R.id.seatsAvailable);
         TextView purchase = (TextView) findViewById(R.id.purchase);
         TextView noOfSeats =(TextView) findViewById(R.id.noOfSeats);
         TextView seatsPurchased =(TextView) findViewById(R.id.seatsPurchased);
@@ -70,7 +69,6 @@ public class Confirmation extends Dialog{
         from.setText(f);
         to.setText(t);
         depTime.setText(dT);
-        seatsAvailable.setText(sA);
         arrival.setText(a);
         totalCost = Double.parseDouble(c)*Double.parseDouble(nOS);
         purchase.setText(Double.toString(totalCost));
@@ -132,14 +130,14 @@ public class Confirmation extends Dialog{
             }
         });
 
-        Button cancel = (Button) findViewById(R.id.cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                cancel();
-            }
-        });
+//        Button cancel = (Button) findViewById(R.id.cancel);
+//        cancel.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                cancel();
+//            }
+//        });
     }
 
 }

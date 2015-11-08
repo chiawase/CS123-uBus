@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.pearlsantos.project.ActionBarAttempt">
+
+
+    <item android:id="@+id/action_search"
+        android:title="Search"
+        android:icon="@mipmap/ic_search"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
+    <item android:id="@+id/action_aboutUs"
+        android:title="About Us"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_help"
+        android:title="Help"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>

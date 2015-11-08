@@ -13,7 +13,9 @@ import android.app.Activity;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,7 +44,9 @@ public class ActionBarAttempt extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_action_bar_attempt);
-            final ActionBar actionBar = getSupportActionBar();
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayShowTitleEnabled(true);
             mTitle = mDrawerTitle = "About";
             options = getResources().getStringArray(R.array.options);
@@ -64,20 +68,21 @@ public class ActionBarAttempt extends AppCompatActivity {
             mDrawerToggle = new ActionBarDrawerToggle(
                     this,                  /* host Activity */
                     mDrawerLayout,         /* DrawerLayout object */
-                    R.mipmap.logo,  /* nav drawer image to replace 'Up' caret */
+                    R.mipmap.ubus_logo_final,  /* nav drawer image to replace 'Up' caret */
                     R.string.drawer_open,  /* "open drawer" description for accessibility */
                     R.string.drawer_close  /* "close drawer" description for accessibility */
-            ) {
-                public void onDrawerClosed(View view) {
-                    actionBar.setTitle(mTitle);
-                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-                }
-
-                public void onDrawerOpened(View drawerView) {
-                    actionBar.setTitle(mDrawerTitle);
-                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-                }
-            };
+            );
+//            {
+//                public void onDrawerClosed(View view) {
+//                    actionBar.setTitle(mTitle);
+//                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+//                }
+//
+//                public void onDrawerOpened(View drawerView) {
+//                    actionBar.setTitle(mDrawerTitle);
+//                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+//                }
+//            };
             mDrawerLayout.setDrawerListener(mDrawerToggle);
 
             if (savedInstanceState == null) {

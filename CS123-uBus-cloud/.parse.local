@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "uBus"
+    },
+    "uBus": {
+      "applicationId": "waBL5APV9kwdeqnm1kQ34BivGHQjjHQr1I58ubmJ"
+    }
+  }
+}

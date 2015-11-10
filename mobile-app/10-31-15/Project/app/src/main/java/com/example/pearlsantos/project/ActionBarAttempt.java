@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,31 +42,32 @@ public class ActionBarAttempt extends AppCompatActivity {
         private CharSequence mDrawerTitle;
         private CharSequence mTitle;
         private String[] options;
+        private int[] optionIcons = {R.mipmap.ic_search, R.mipmap.ic_search, R.mipmap.ic_search, R.mipmap.ic_settings, R.mipmap.ic_logout};;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_action_bar_attempt);
+
+            //setting the toolbar
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
 
-
-            ActionBar actionBar = getSupportActionBar();
+            final ActionBar actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
             toolbar.setNavigationIcon(R.drawable.ic_action_menu);
+
             mTitle = mDrawerTitle = "About";
             options = getResources().getStringArray(R.array.options);
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            mDrawerList = (ListView) findViewById(R.id.left_drawer);
+            //mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
 
             // set up the drawer's list view with items and click listener
-            mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                    R.layout.custom_draw_item, options));
-            mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+//            mDrawerList.setAdapter(new CustomAdapter(this,options, optionIcons));
+//            mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
             // enable ActionBar app icon to behave as action to toggle nav drawer
 
@@ -73,13 +75,13 @@ public class ActionBarAttempt extends AppCompatActivity {
 
             // ActionBarDrawerToggle ties together the the proper interactions
             // between the sliding drawer and the action bar app icon
-            mDrawerToggle = new ActionBarDrawerToggle(
-                    this,                  /* host Activity */
-                    mDrawerLayout,         /* DrawerLayout object */
-                    R.drawable.ic_action_menu,  /* nav drawer image to replace 'Up' caret */
-                    R.string.drawer_open,  /* "open drawer" description for accessibility */
-                    R.string.drawer_close  /* "close drawer" description for accessibility */
-            );
+//            mDrawerToggle = new ActionBarDrawerToggle(
+//                    this,                  /* host Activity */
+//                    mDrawerLayout,         /* DrawerLayout object */
+//                    R.drawable.ic_action_menu,  /* nav drawer image to replace 'Up' caret */
+//                    R.string.drawer_open,  /* "open drawer" description for accessibility */
+//                    R.string.drawer_close  /* "close drawer" description for accessibility */
+//            )
 //            {
 //                public void onDrawerClosed(View view) {
 //                    actionBar.setTitle(mTitle);
@@ -91,7 +93,7 @@ public class ActionBarAttempt extends AppCompatActivity {
 //                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
 //                }
 //            };
-            mDrawerLayout.setDrawerListener(mDrawerToggle);
+//            mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 
             if (savedInstanceState == null) {
@@ -120,8 +122,14 @@ public class ActionBarAttempt extends AppCompatActivity {
         public boolean onOptionsItemSelected(MenuItem item) {
             // The action bar home/up action should open or close the drawer.
             // ActionBarDrawerToggle will take care of this.
-            if (mDrawerToggle.onOptionsItemSelected(item)) {
-                return true;
+//            if (mDrawerToggle.onOptionsItemSelected(item)) {
+//                return true;
+//            }
+
+            switch(item.getItemId()){
+                case android.R.id.home:
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                    return true;
             }
 //            Fragment fragment = null;
 //            Bundle args = new Bundle();
@@ -148,7 +156,7 @@ public class ActionBarAttempt extends AppCompatActivity {
 //                    return super.onOptionsItemSelected(item);
 //            }
 
-            return true;
+            return super.onOptionsItemSelected(item);
         }
 
     /* The click listner for ListView in the navigation drawer */
@@ -166,7 +174,7 @@ public class ActionBarAttempt extends AppCompatActivity {
 
         switch(position){
             case 0:
-                Fragment fa = new SearchFragment();
+                fragment = new SearchFragment();
                 break;
             case 1:
                 fragment = new Schedules();
@@ -224,6 +232,53 @@ public class ActionBarAttempt extends AppCompatActivity {
     }
 
 
+    }
+
+
+    class CustomAdapter extends BaseAdapter {
+        String[] options;
+        Context context;
+        int[] imageID;
+        private static LayoutInflater inflater = null;
+
+        public CustomAdapter(Context mainActivity,String[] optionsList, int[] optionIcons){
+            options = optionsList;
+            context = mainActivity;
+            imageID = optionIcons;
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public int getCount() {
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public class Holder{
+            ImageView img;
+            TextView tv;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            Holder holder = new Holder();
+            View rowView;
+            rowView = inflater.inflate(R.layout.custom_draw_item, null);
+            holder.tv = (TextView) rowView.findViewById(R.id.nav_item);
+            holder.img = (ImageView) rowView.findViewById(R.id.list_icon);
+            holder.tv.setText(options[position]);
+            holder.img.setImageResource(imageID[position]);
+            return rowView;
+        }
     }
 
 

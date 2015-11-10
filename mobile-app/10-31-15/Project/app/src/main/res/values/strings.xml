@@ -16,6 +16,15 @@
         <item>Log Out</item>
     </string-array>
 
+    <!--<integer-array name="optionIcons">-->
+        <!--<item>@mipmap/ic_search</item>-->
+        <!--<item>@mipmap/ic_search</item>-->
+        <!--<item>@mipmap/ic_new_profile</item>-->
+        <!--<item>@mipmap/ic_search</item>-->
+        <!--<item>@mipmap/ic_settings</item>-->
+        <!--<item>@mipmap/ic_logout</item>-->
+    <!--</integer-array>-->
+
     <string-array name="list">
         <item>Sched1</item>
         <item>Sched2</item>

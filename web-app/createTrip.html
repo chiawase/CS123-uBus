@@ -1,0 +1,79 @@
+<!-- List all Schedule Times
+List all Origin Terminals
+List all Destination Terminals
+List all Bus Plate of Current Bus Company
+List all Bus Types of Current Bus Company -->
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>uBus | Admin System</title>
+		<meta charset="utf-8">
+		<meta name="description" content="uBus Ticket Reservation System administrator tools.">
+		<link rel="icon" type="image/x-icon" href="img/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<script src="js/parse-1.6.7.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
+	</head>
+	<body>
+		<header class="header">
+			<a href="index.html" class="header__logo"><img src="img/logo.png" width="40px"></a>
+			<nav class="header__nav" id="navigation">
+				<a href=""></a>
+				<a href=""></a>
+			</nav>
+		</header>
+		<main class="container">
+			<div class="createTrip card">
+				<form class="createTrip__form">
+					<h1 class="createTrip__header">Create Trip</h1>
+					<label class="createTrip__selectLabel">
+						<span>Origin: </span>
+						<select class="createTrip__select" id="selectOrigin">
+							<option>Hello</option>
+						</select>
+					</label>
+					<label class="createTrip__selectLabel">
+						<span>Destination: </span>
+						<select class="createTrip__select" id="selectDestination">
+							<option>Hello</option>
+						</select>
+					</label>
+					<hr>
+					<label class="createTrip__selectLabel">
+						<span>Schedule Code: </span>
+						<select class="createTrip__select" id="selectSchedule">
+							<option>Hello</option>
+						</select>
+					</label>
+					<label class="createTrip__information">
+						<span>Time: </span>
+						<input type="text" id="scheduleTime" disabled="true" size="10">
+						<span>Day: </span>
+						<input type="text" id="scheduleDay" disabled="true" size="10">
+					</label>
+					<hr>
+					<label class="createTrip__selectLabel">
+						<span>Plate Number: </span>
+						<select class="createTrip__select" id="selectPlate">
+							<option>Hello</option>
+						</select>
+					</label>
+					<label class="createTrip__information">
+						<span>Bus Type: </span>
+						<input type="text" id="busType" disabled="true" size="10">
+					</label>
+<!-- 					<label for="cost" class="createTrip__cost">
+						<span>Costs Per Seat</span>
+						<input type="text" id="cost">
+					</label>	 -->				
+					<label class="createTrip__submit" >
+						<button id="createTrip__btn">Create Trip</button>
+					</label>
+				</form>
+			</div>
+		</main>
+	</body>
+</html>
+

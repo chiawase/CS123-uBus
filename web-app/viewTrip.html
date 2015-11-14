@@ -13,25 +13,15 @@
 	</head>
 	<body>
 		<header class="header">
-			<a href="header__logo"></a>
+			<a href="index.html" class="header__logo"><img src="img/logo.png" width="40px"></a>
 			<nav class="header__nav" id="navigation">
 				<a href=""></a>
 				<a href=""></a>
 			</nav>
 		</header>
 		<main class="container">
-			<div class="login card">
-				<form class="login__form">
-					<h1 class="login__header">LOG-IN</h1>
-					<label class="fa fa-user fa-2x login__uname" >
-					<input type="text" id="login_uname"  placeholder="Username" autofocus></label>
-					<label class="fa fa-unlock fa-2x login__pass">
-					<input type="password" id="login_pass" placeholder="Password"></label>
-					<label class="login__submit" >
-						<button id="login__btn" onclick="app.login()">Login</button>
-					</label>
-				</form>
-			</div>
+			<ul class="tripList" id="tripList">
+			</ul>
 		</main>
 	</body>
 </html>

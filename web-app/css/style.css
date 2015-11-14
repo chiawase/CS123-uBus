@@ -1,161 +1,163 @@
-html, body {
-	margin: 0;
-	padding: 0;
+/*
+ * Resets
+ * Typography
+ * General Style Classes
+ *  → Grid System
+ * Components
+ *  → Navigation
+ *	→ Registration/Login
+ *  → Schedule
+ *  → Adding Credits
+ *
+ *
+ */
+
+
+ /* Resets */
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
 }
 
 body {
-	font-family: "Courier New", Courier, monospace;
+	font-size: 1.6em;
+	margin: 0;
 }
 
-nav {
-	position: relative;
-	height: 60px;
-	background-color: #124E78;
+/* Typography */
+body {
+	font-family: Helvetica, Arial, sans-serif;
 }
 
-nav a {
-	display: inline-block;
-	height: 100%;
-	padding: 10px;
-	position: relative;
-	float:right;
-}
-
-nav a:first-child {
-	float: left;
-}
-
-	nav > h1 {
-		display: inline-block;
-		margin: 0;
-		padding-top: 15px;
-		padding-left: 15px;
-		color: #fff;
-	}
-
-.button {
-	display: inline-block;
-	width: 45% !important;
-	text-align:center;
-	padding: 0 !important;
-}
-
-.button:first-child {
-	margin-right: 15px;
-}
-	
-	.button a {
-		display: block;
-		width: 100%;
-		text-decoration: none;
-		color: black;
-	}
-
-	.button img {
-		display:block;
-		width:80%;
-		margin:0 5% 0 15%;
-	}
-
-.wrapper {
-	width: 90%;
-	margin: 0 auto;
-	padding-top: 20px;
-}
-
-.title {
-	text-align: center;
-}
-
-	.title h1{
-		display: inline-block;
-	}
-
+/* General Style Classes */
 .card {
 	box-shadow:0 1px 2px #aaa;
 	/*height: 300px;*/
 	padding: 2rem;
 	border-radius:3px;
-	margin: 0 auto;
-	width: 60%;
 }
 
-	.card img {
-		display: inline-block;
+/* Components */
+.header {
+	display: block;
+	width: 100%;
+	height: 80px;
+	background-color: #124E78;
+}
+
+.container {
+	display: block;
+	width: 80%;
+	padding-top: 60px;
+	margin: 0 auto;
+}
+
+.login {
+	display: block;
+	width: 80%;
+	margin: 0 auto;
+	/*-moz-column-count: 2;*/
+}
+
+	.login__form {
+		display: block;
+		width: 80%;
+		margin: 0 auto;
+	}
+
+	.login__header {
+		text-align: center;
+	}
+
+	.login__uname, .login__pass {
+		display: block;
+		width: 50%;
+		height: 80px;
+		margin: 0 auto;
+	}
+
+		.login__uname::before, .login__pass::before {
+			display: inline-block;
+			margin-right: 10px;
+		}
+
+		.login__uname input, .login__pass input {
+			border: 0;
+			border-bottom: solid 1px;
+			width: 80%;
+			margin: 0 auto;
+			padding: 10px;
+		}
+
+		.login__uname input:focus, .login__pass input:focus {
+			border-bottom-color: #124E78;
+			border-bottom-width: 2.5px;
+		}
+
+	.login__submit {
 		position: relative;
-		top: 0;
-		left: 0;
+		display: block;
+		width: 100%;
+		height: 50px;
 	}
 
-		.row {
-			position: relative;
-		}
-
-		.card .img-placeholder {
-			position: absolute;
-			top: 0;
-		}
-
-	.card form {
-		display: inline-block;
-		margin-left: 80px;
-		width: calc(100% - 80px);
+	#login__btn {
+		position: absolute;
+		right: 0;
+		bottom:0;
 	}
 
-	.card_schedule fieldset {
+	.actionbox__list {
+		list-style-type: none;
+	}
+
+.tripList {
+	list-style-type: none;
+}
+
+	.tripList__item {
+		display: block;
+		width: calc(50% - 10px);
+		float: left;
+	}
+
+	.tripList__itemInfo {
+		display: block;
+		width: 50%;
+		float: left;
+	}
+
+.createTrip{
+	display: block;
+	height: 450px;
+	padding: 2rem 6rem;
+}
+	.createTrip__selectLabel {
 		display: inline-block;
-		width: 30%;
-		border:none;
+		width: 45%;
+		margin-right: 20px;
+	}
+
+	.createTrip__selectLabel li:nth-child(4) {
+		display: block;
+	}
+
+	.createTrip__information {
+		display: block;
+		margin-top: 10px;
 		margin-bottom: 20px;
 	}
 
-	.card_schedule fieldset input[type="text"], .card_schedule fieldset input[type="datetime-local"] {
-		font-size: 1em;
-		border-top:0;
-		border-left: 0;
-		border-right: 0;
+	.createTrip__information input[type="text"] {
+		background-color: white;
+		border: none;
+		border-bottom: solid 1px;
 	}
 
-	.card_schedule fieldset:nth-child(5) {
-		width: 80%;
+	.createTrip hr {
+		margin: 30px 0;
 	}
-
-	.card_schedule fieldset:nth-child(n+6):nth-child(-n+8) {
-		display: block;
-		width: 40%;
-	}
-
-	.card_schedule fieldset:nth-child(n+5):nth-child(-n+8) input[type="text"] {
-		position: relative;
-		top: 50%;
-		transform: translateY(-50%);
-		margin-left: 10px;
-		border-top:0;
-		border-left: 0;
-		border-right: 0;
-	}
-
-.card_adminAccount fieldset  {
-	display: inline-block;
-	width: 40%;
-	border: none;
-	margin-bottom: 20px;
-}
-
-.card_adminAccount input[type="text"], .card_adminAccount input[type="password"] {
-		position: relative;
-		top: 50%;
-		transform: translateY(-50%);
-		margin-left: 15px;
-		border-top:0;
-		border-left: 0;
-		border-right: 0;
-}
-
-input[type="text"] {
-
-}
-
-.row {
-	display: block;
-}

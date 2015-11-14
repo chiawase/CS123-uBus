@@ -85,7 +85,7 @@ var app = {
 	searchTrip : function(busCompany) {
 		var tripQuery = new Parse.Query("Trip");
 		var busQuery = new Parse.Query("Bus_Company");
-		busQuery.equalTo('companyName', busCompany);
+		busQuery.equalTo('objectId', busCompany);
 		tripQuery.include('origin');
 		tripQuery.include('destination');
 		tripQuery.include('assignedBus');
@@ -204,7 +204,7 @@ var app = {
 		// Append to DOM
 		var skedQuery = new Parse.Query("Schedule");
 		var busQuery = new Parse.Query("Bus_Company");
-		busQuery.equalTo('companyName', busCompany);
+		busQuery.equalTo('objectId', busCompany);
 		skedQuery.include("busCompany");
 		skedQuery.matchesQuery("busCompany", busQuery);
 		skedQuery.descending("scheduleCode").find({
@@ -236,7 +236,7 @@ var app = {
 		var plateQuery = new Parse.Query("Bus");
 		var busQuery = new Parse.Query("Bus_Company");
 
-		busQuery.equalTo("companyName", busCompany);
+		busQuery.equalTo("objectId", busCompany);
 		plateQuery.matchesQuery("operator", busQuery);
 		plateQuery.include("operator");
 		plateQuery.find({
@@ -258,7 +258,7 @@ window.onload = function(){
 	// if(!loggedIn and trying to access index) → go to login
 	// If(loggedIn) → append logout
 	var currUserAffiliation = currentUser.get("affiliation").id;
-	// console.log(currUserAffiliation);
+	console.log(currUserAffiliation);
 
 
 	//set affiliation variable

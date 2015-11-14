@@ -18,7 +18,8 @@ import android.widget.Toast;
 public class ReservingSeats extends Dialog {
     SharedPreferences busSchedule;
     EditText noOfSeats;
-    String bN, pN, f, t, dT, sA, c, nOS, a;
+    String sA;
+    int nOS;
     NumberPicker tens;
     NumberPicker ones;
 
@@ -31,6 +32,7 @@ public class ReservingSeats extends Dialog {
     {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        setContentView(R.layout.activity_reserving_seats);
         busSchedule = getContext().getSharedPreferences("bus", Context.MODE_PRIVATE);
 //        if(busSchedule!=null){
 //            bN = busSchedule.getString("busNum", "").trim();
@@ -38,7 +40,7 @@ public class ReservingSeats extends Dialog {
 //            f = busSchedule.getString("from", "").trim();
 //            t = busSchedule.getString("to", "").trim();
 //            dT = busSchedule.getString("depTime", "").trim();
-            sA = busSchedule.getString("seatsAvailable", "").trim();
+        sA = busSchedule.getString("seatsAvailable", "").trim();
 //            c = busSchedule.getString("cost", "").trim();
 //            a = busSchedule.getString("arrival", "").trim();
 //        }
@@ -56,7 +58,6 @@ public class ReservingSeats extends Dialog {
         ones.setWrapSelectorWheel(true);
 
 
-        setContentView(R.layout.activity_reserving_seats);
 
 //        noOfSeats = (EditText) findViewById(R.id.noOfSeats);
 //        noOfSeats.setText("1");
@@ -69,12 +70,13 @@ public class ReservingSeats extends Dialog {
                 NumberPicker tensSeats = (NumberPicker) findViewById(R.id.numberPicker);
                 NumberPicker unitSeats = (NumberPicker) findViewById(R.id.numberPicker2);
 
-                int nOS1 = (tensSeats.getValue()*10) + unitSeats.getValue();
+                nOS = (tensSeats.getValue()*10) + unitSeats.getValue();
 
-                int remainingSeats = Integer.parseInt(sA) - nOS1;
+                int remainingSeats = Integer.parseInt(sA) - nOS;
                 if (remainingSeats > 0) {
                     SharedPreferences.Editor edit = busSchedule.edit();
-                    edit.putString("noOfSeats", noOfSeats.getText().toString().trim());
+                    edit.putString("noOfSeats", Integer.toString(nOS).trim());
+                    edit.putString("seatsAvailable", Integer.toString(remainingSeats).trim());
                     edit.commit();
                     Confirmation confirm = new Confirmation(getContext());
                     confirm.show();

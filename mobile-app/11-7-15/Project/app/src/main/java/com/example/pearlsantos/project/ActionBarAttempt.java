@@ -166,7 +166,7 @@ public class ActionBarAttempt extends AppCompatActivity {
 
         switch(position){
             case 0:
-                Fragment fa = new SearchFragment();
+                fragment = new SearchFragment();
                 break;
             case 1:
                 fragment = new Schedules();

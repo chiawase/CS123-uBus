@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -42,7 +43,8 @@ public class ActionBarAttempt extends AppCompatActivity {
         private CharSequence mDrawerTitle;
         private CharSequence mTitle;
         private String[] options;
-        private int[] optionIcons = {R.mipmap.ic_search, R.mipmap.ic_search, R.mipmap.ic_search, R.mipmap.ic_settings, R.mipmap.ic_logout};;
+        private NavigationView nvDrawer;
+       // private int[] optionIcons = {R.mipmap.ic_search, R.mipmap.ic_search, R.mipmap.ic_search, R.mipmap.ic_settings, R.mipmap.ic_logout};;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,8 @@ public class ActionBarAttempt extends AppCompatActivity {
             mTitle = mDrawerTitle = "About";
             options = getResources().getStringArray(R.array.options);
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            nvDrawer = (NavigationView) findViewById(R.id.left_drawer);
+            setupDrawerContent(nvDrawer);
             //mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
 
@@ -96,10 +100,73 @@ public class ActionBarAttempt extends AppCompatActivity {
 //            mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 
-            if (savedInstanceState == null) {
-                selectItem(0);
-            }
+//            if (savedInstanceState == null) {
+//                selectItem(0);
+//            }
         }
+
+        private void setupDrawerContent(NavigationView navigationView){
+            navigationView.setNavigationItemSelectedListener(
+                    new NavigationView.OnNavigationItemSelectedListener(){
+                        @Override
+                        protected Object clone() throws CloneNotSupportedException {
+                            return super.clone();
+                        }
+
+                        @Override
+                        public boolean onNavigationItemSelected(MenuItem menuItem) {
+                            selectDrawerItem(menuItem);
+                            return true;
+                        }
+                    }
+            );
+        }
+
+    public void selectDrawerItem(MenuItem menuItem){
+        Fragment fragment = null;
+
+        Class fragmentClass;
+        switch(menuItem.getItemId()){
+            case R.id.search:
+                fragmentClass = SearchFragment.class;
+                break;
+            case R.id.schedules:
+                fragmentClass = Schedules.class;
+                break;
+            case R.id.editProfile:
+                fragmentClass = ChangeInfoFragment.class;
+                break;
+            case R.id.viewPastTrips:
+                fragmentClass = PastTrips.class;
+                break;
+            case R.id.settings:
+                //settings
+                fragmentClass = Help.class;
+                break;
+            case R.id.logout:
+                //logout
+                fragmentClass = Help.class;
+                break;
+            default:
+                fragmentClass = SearchFragment.class;
+                break;
+        }
+
+        try{
+            fragment = (Fragment) fragmentClass.newInstance();
+        }catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+        // update selected item and title, then close the drawer
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        mDrawerLayout.closeDrawers();
+    }
 
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {
@@ -113,8 +180,8 @@ public class ActionBarAttempt extends AppCompatActivity {
         @Override
         public boolean onPrepareOptionsMenu(Menu menu) {
             // If the nav drawer is open, hide action items related to the content view
-            boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-            menu.findItem(R.id.action_search).setVisible(!drawerOpen);
+//            boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+//            menu.findItem(R.id.action_search).setVisible(!drawerOpen);
             return super.onPrepareOptionsMenu(menu);
         }
 
@@ -159,58 +226,58 @@ public class ActionBarAttempt extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
         }
 
-    /* The click listner for ListView in the navigation drawer */
-        private class DrawerItemClickListener implements ListView.OnItemClickListener {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
-            }
-        }
+//    /* The click listner for ListView in the navigation drawer */
+//        private class DrawerItemClickListener implements ListView.OnItemClickListener {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                selectItem(position);
+//            }
+//        }
 
-    private void selectItem(int position) {
-        // update the main content by replacing fragments
-        Fragment fragment = null;
-        Bundle args = new Bundle();
-
-        switch(position){
-            case 0:
-                fragment = new SearchFragment();
-                break;
-            case 1:
-                fragment = new Schedules();
-                break;
-            case 2:
-                fragment = new ChangeInfoFragment();
-                break;
-            case 3:
-                fragment = new PastTrips();
-                break;
-            case 4:
-                //settings
-                fragment = new Help();
-                break;
-            case 5:
-                //logout
-                fragment = new Help();
-                break;
-            default:
-                break;
-        }
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-        // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(options[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-        getSupportActionBar().setTitle(mTitle);
-    }
+//    private void selectItem(int position) {
+//        // update the main content by replacing fragments
+//        Fragment fragment = null;
+//        Bundle args = new Bundle();
+//
+//        switch(position){
+//            case 0:
+//                fragment = new SearchFragment();
+//                break;
+//            case 1:
+//                fragment = new Schedules();
+//                break;
+//            case 2:
+//                fragment = new ChangeInfoFragment();
+//                break;
+//            case 3:
+//                fragment = new PastTrips();
+//                break;
+//            case 4:
+//                //settings
+//                fragment = new Help();
+//                break;
+//            case 5:
+//                //logout
+//                fragment = new Help();
+//                break;
+//            default:
+//                break;
+//        }
+//
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+//
+//        // update selected item and title, then close the drawer
+//        mDrawerList.setItemChecked(position, true);
+//        setTitle(options[position]);
+//        mDrawerLayout.closeDrawer(mDrawerList);
+//    }
+//
+//    @Override
+//    public void setTitle(CharSequence title) {
+//        mTitle = title;
+//        getSupportActionBar().setTitle(mTitle);
+//    }
 
     /**
      * When using the ActionBarDrawerToggle, you must call it during
@@ -221,14 +288,14 @@ public class ActionBarAttempt extends AppCompatActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
+        //mDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        //mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
 

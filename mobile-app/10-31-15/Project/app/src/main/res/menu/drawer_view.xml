@@ -6,6 +6,10 @@
             android:icon="@mipmap/ic_search"
             android:title="Search"/>
         <item
+            android:id="@+id/schedules"
+            android:icon="@mipmap/ic_new_profile"
+            android:title="Edit Profile"/>
+        <item
             android:id="@+id/editProfile"
             android:icon="@mipmap/ic_new_profile"
             android:title="Edit Profile"/>

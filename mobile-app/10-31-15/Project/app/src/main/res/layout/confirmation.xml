@@ -1,4 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view = "http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    >
+<LinearLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
@@ -21,7 +31,7 @@
             android:text="00 "
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <TextView
             android:id="@+id/noOfSeatsLabel"
@@ -30,7 +40,7 @@
             android:text="Seats Reserved!"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
     </LinearLayout>
 
@@ -61,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_gravity="center"
             android:layout_weight="2">
 
             <TextView
@@ -68,25 +79,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="From"
-                android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
             <TextView
                 android:id="@+id/from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PlaceA"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:text="PLACE A"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <TextView
                 android:id="@+id/depTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ETD 00:00"
-                android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         </LinearLayout>
 
@@ -95,6 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_gravity="center"
             android:layout_weight="2">
 
             <TextView
@@ -102,23 +112,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="To"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
             <TextView
                 android:id="@+id/to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PlaceB"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:text="PLACE B"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
             <TextView
                 android:id="@+id/arrTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ETA 00:00"
-                android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         </LinearLayout>
     </LinearLayout>
@@ -148,8 +157,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
                 android:text="00"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
 
 
@@ -161,22 +171,37 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/purchaseLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="TOTAL: P  "
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-            <TextView
-                android:id="@+id/purchase"
+                android:layout_gravity="left"
+                android:text="TOTAL:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="00"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_weight="2"
+                android:orientation="horizontal" >
+                <TextView
+                    android:id="@+id/purchaseLabelP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:text="P"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+                <TextView
+                    android:id="@+id/purchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="5dp"
+                    android:text="00.00"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+            </LinearLayout>
 
 
 
@@ -200,3 +225,4 @@
             android:layout_marginRight="20dp"/>
     </LinearLayout>
 </LinearLayout>
+</android.support.v7.widget.CardView>

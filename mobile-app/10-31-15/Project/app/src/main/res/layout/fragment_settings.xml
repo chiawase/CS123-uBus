@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
         android:text="SORT AVAILABLE TRIPS BY"
         android:id="@+id/textView4"
         android:layout_marginBottom="10dp"
@@ -27,12 +27,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:drawableBottom="@drawable/underline2"
         android:id="@+id/spinner"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
         android:text="CLEAR DATA"
         android:layout_marginBottom="10dp"
         android:id="@+id/textView5"
@@ -41,32 +42,35 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp">
+
+        android:layout_marginBottom="5dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:drawableBottom="@drawable/underline2"
             android:text="Clear Search Data"
-            android:id="@+id/clearSearchData"
-            android:drawableBottom="@drawable/underline" />
+            android:id="@+id/clearSearchData"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:drawableBottom="@drawable/underline2"
         android:layout_marginBottom="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:drawableBottom="@drawable/underline2"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Clear Past Trips"
             android:id="@+id/clearPastTrips"/>
     </LinearLayout>

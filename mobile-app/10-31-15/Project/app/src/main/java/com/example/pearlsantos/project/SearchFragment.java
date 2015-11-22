@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +49,8 @@ public class SearchFragment extends Fragment {
             }
         });
 
-
+//        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+//        toolbar.setNavigationIcon(R.mipmap.ic_search);
         return rootView;
 
 

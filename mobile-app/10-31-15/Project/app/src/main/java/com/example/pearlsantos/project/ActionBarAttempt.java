@@ -38,13 +38,9 @@ import java.util.Locale;
 public class ActionBarAttempt extends AppCompatActivity {
 
         private DrawerLayout mDrawerLayout;
-        private ListView mDrawerList;
-        private ActionBarDrawerToggle mDrawerToggle;
-        private CharSequence mDrawerTitle;
-        private CharSequence mTitle;
-        private String[] options;
         private NavigationView nvDrawer;
-       // private int[] optionIcons = {R.mipmap.ic_search, R.mipmap.ic_search, R.mipmap.ic_search, R.mipmap.ic_settings, R.mipmap.ic_logout};;
+        Toolbar toolbar;
+        ActionBar actionBar;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -52,20 +48,22 @@ public class ActionBarAttempt extends AppCompatActivity {
             setContentView(R.layout.activity_action_bar_attempt);
 
             //setting the toolbar
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-
-            final ActionBar actionBar = getSupportActionBar();
+            actionBar = getSupportActionBar();
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
             toolbar.setNavigationIcon(R.drawable.ic_action_menu);
 
-            mTitle = mDrawerTitle = "About";
-            options = getResources().getStringArray(R.array.options);
             mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             nvDrawer = (NavigationView) findViewById(R.id.left_drawer);
             setupDrawerContent(nvDrawer);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, new SearchFragment()).commit();
+
+
+
             //mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
 
@@ -127,21 +125,22 @@ public class ActionBarAttempt extends AppCompatActivity {
 
         Class fragmentClass;
         switch(menuItem.getItemId()){
-            case R.id.search:
-                fragmentClass = SearchFragment.class;
-                break;
-            case R.id.schedules:
-                fragmentClass = Schedules.class;
-                break;
+//            case R.id.search:
+//                fragmentClass = SearchFragment.class;
+//                break;
             case R.id.editProfile:
                 fragmentClass = ChangeInfoFragment.class;
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setHomeButtonEnabled(true);
+                actionBar.setDisplayShowTitleEnabled(true);
+                toolbar.setNavigationIcon(R.drawable.ic_action_menu);
                 break;
             case R.id.viewPastTrips:
                 fragmentClass = PastTrips.class;
                 break;
             case R.id.settings:
                 //settings
-                fragmentClass = Help.class;
+                fragmentClass = Settings.class;
                 break;
             case R.id.logout:
                 //logout

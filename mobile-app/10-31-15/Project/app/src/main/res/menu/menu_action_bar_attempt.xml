@@ -4,11 +4,11 @@
     tools:context="com.example.pearlsantos.project.ActionBarAttempt">
 
 
-    <item android:id="@+id/action_search"
-        android:title="Search"
-        android:icon="@mipmap/ic_search"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="android.support.v7.widget.SearchView"/>
+    <!--<item android:id="@+id/action_search"-->
+        <!--android:title="Search"-->
+        <!--android:icon="@mipmap/ic_search"-->
+        <!--android:orderInCategory="100"-->
+        <!--app:showAsAction="ifRoom|collapseActionView"-->
+        <!--app:actionViewClass="android.support.v7.widget.SearchView"/>-->
 
 </menu>

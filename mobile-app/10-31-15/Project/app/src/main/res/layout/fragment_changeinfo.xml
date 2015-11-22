@@ -1,60 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
 
-    <!--
-    **************************IMPORTANT***********************************
-     change this id attribute values as "frag2_icon" and "frag2_text" for
-     fragment_layout_two.xml and "frag3_icon" and "frag3_text" for
-     fragment_layout_three.xml
-    **********************************************************************
-      -->
+
     <LinearLayout
         android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_weight="1">
-    <TextView
-        android:gravity="center"
-        android:id="@+id/frag1_text"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/deep_orange_500">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.pkmmte.view.CircularImageView
+                android:id="@+id/profile_image"
+                app:border="true"
+                app:border_color="@color/white"
+                app:border_width="4dp"
+                app:shadow="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:src="@mipmap/ic_launcher"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp">
+                <EditText
+                    android:layout_width="242dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/firstNameChange"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColorHint="@color/white"
+                    android:hint="Kunyari"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lastNameChange"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textColorHint="@color/white"
+                    android:hint="Lang"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Photo"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:textColorLink="@color/blue_500"
+                android:clickable="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete Photo"
+                android:layout_marginBottom="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:textColorLink="@color/blue_500"
+                android:clickable="true"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="0917 123 4567"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColorHint="@color/white"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+    xmlns:card_view = "http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="5dp"
         android:layout_marginLeft="10dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Change Info"/>
-    </LinearLayout>
+        android:layout_marginRight="10dp"
+    >
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_weight="1">
-
-        <EditText
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="Name"
-            android:ems="20"
-            android:id="@+id/editText" />
+            android:text="Change Password"
+            android:layout_margin="10dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Old Password"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:layout_margin="5dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="New Password"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:layout_margin="5dp"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Re-enter New Password"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:layout_margin="5dp"/>
     </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_weight="1">
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText2"
-            android:ems="20"
-            android:hint="Number" />
-
-     </LinearLayout>
-
+    </android.support.v7.widget.CardView>
 </LinearLayout>

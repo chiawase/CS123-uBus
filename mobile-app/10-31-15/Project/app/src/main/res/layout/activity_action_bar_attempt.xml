@@ -17,12 +17,22 @@
             android:background="#ff5722"
             app:contentInsetEnd="0dp"
             app:contentInsetStart="0dp"
-            />
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+        </android.support.v7.widget.Toolbar>
         <FrameLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/content_frame"
             />
+
+
     </LinearLayout>
     <!-- The navigation drawer -->
     <!--<ListView android:id="@+id/left_drawer"-->
@@ -35,6 +45,7 @@
         <!--android:background="@color/deep_orange_300"/>-->
 
     <android.support.design.widget.NavigationView
+        app:headerLayout="@layout/header"
         android:id="@+id/left_drawer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

@@ -1,8 +1,3 @@
-<!-- List all Schedule Times
-List all Origin Terminals
-List all Destination Terminals
-List all Bus Plate of Current Bus Company
-List all Bus Types of Current Bus Company -->
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -10,10 +5,12 @@ List all Bus Types of Current Bus Company -->
 		<meta charset="utf-8">
 		<meta name="description" content="uBus Ticket Reservation System administrator tools.">
 		<link rel="icon" type="image/x-icon" href="img/favicon.ico">
-		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">		
+		<link rel="stylesheet" type="text/css" href="css/rolling.css">
 		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
 		<script src="js/parse-1.6.7.js"></script>
+		<script type="text/javascript" src="js/moment.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
 	</head>
 	<body>
@@ -25,52 +22,60 @@ List all Bus Types of Current Bus Company -->
 			</nav>
 		</header>
 		<main class="container">
+			<div id="loader" style="position: fixed; z-index: 100; width: 100%; height: 100%; display: block; background-color: gray;top: 80px;left: 0;-webkit-opacity: 0.5;">
+				<div class='uil-rolling-css' style='margin:20vh auto; -webkit-transform:scale(0.6);'><div><div></div><div></div></div></div>	
+			</div>
+			<p id="successMessage" style="display:none; color: white; font-weight: 500; background-color:darkgreen; padding: 20px;">Trip created successfully!</p>
 			<div class="createTrip card">
 				<form class="createTrip__form">
 					<h1 class="createTrip__header">Create Trip</h1>
 					<label class="createTrip__selectLabel">
 						<span>Origin: </span>
 						<select class="createTrip__select" id="selectOrigin">
-							<option>Hello</option>
+							<option>--</option>
 						</select>
 					</label>
 					<label class="createTrip__selectLabel">
 						<span>Destination: </span>
 						<select class="createTrip__select" id="selectDestination">
-							<option>Hello</option>
+							<option>--</option>
 						</select>
 					</label>
 					<hr>
 					<label class="createTrip__selectLabel">
-						<span>Schedule Code: </span>
-						<select class="createTrip__select" id="selectSchedule">
-							<option>Hello</option>
-						</select>
+						<span>Schedule Date: </span>
+						<input type="date" id="selectDate">
 					</label>
-					<label class="createTrip__information">
-						<span>Time: </span>
-						<input type="text" id="scheduleTime" disabled="true" size="10">
-						<span>Day: </span>
-						<input type="text" id="scheduleDay" disabled="true" size="10">
+					<label class="createTrip__selectLabel">
+						<span>Schedule Time: </span>
+						<input type="time" id="selectTime">
 					</label>
 					<hr>
 					<label class="createTrip__selectLabel">
 						<span>Plate Number: </span>
 						<select class="createTrip__select" id="selectPlate">
-							<option>Hello</option>
+							<option>--</option>
 						</select>
 					</label>
 					<label class="createTrip__information">
 						<span>Bus Type: </span>
 						<input type="text" id="busType" disabled="true" size="10">
-					</label>
-<!-- 					<label for="cost" class="createTrip__cost">
-						<span>Costs Per Seat</span>
-						<input type="text" id="cost">
-					</label>	 -->				
+					</label>			
 					<label class="createTrip__submit" >
 						<button id="createTrip__btn">Create Trip</button>
 					</label>
+				</form>
+			</div>
+			<div class="card">
+					<label for="startDate">
+						<span>Start Date</span>
+						<input type="month" id="startDate">
+					</label>
+					<label for="endDate">
+						<span>End Date</span>
+						<input type="month" id="endDate">
+					</label>
+					<button class="generateTrips__btn">Generate Trips</button>	
 				</form>
 			</div>
 		</main>

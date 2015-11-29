@@ -179,54 +179,7 @@ var app = {
 		});
 	},
 	createTrip : function( currUserAffiliation ) {
-		// origin, destination, departure, plateNumber, busType, price
-		// search for id of each parameter
-		// create a pointer using the helper function
-
-		var chosenBus = helper.getSelectedOption("selectPlate");
-		var chosenDate = document.getElementById("selectDate").value;
-		var chosenTime = document.getElementById("selectTime").value;
-		console.log(moment(chosenDate).month());
-
-		var loader = document.getElementById("loader");
-		var successMessage = document.getElementById("successMessage");
-
-		// console.log(chosenSchedule);
-
-		var originPointer, destinationPointer,schedulePointer, busPointer, operatorPointer;
-
-		// Recreate Process below using schedule day and time.
-		// Steps: 
-		// 1. Search for schedule using day and time
-		// 2. Create pointers like below
-
-		helper.getParseObjectID( "plateNumber", chosenBus, "Bus" )
-		.then(function(res){
-			busPointer = helper.pointerTo(res, "Bus");
-		})
-		.catch(function(err){ console.log("Bus Error: " + err.code); })
-		.then(function(){
-			var dateAndTime = chosenDate+" "+chosenTime;
-			console.log(typeof dateAndTime);
-			console.log(dateAndTime);
-			var operatorPointer = helper.pointerTo(currUserAffiliation, "Bus_Company");
-			var Trip = new Parse.Object.extend("Trip");
-			var trip = new Trip();
-			trip.set("assignedBus", busPointer);
-			trip.set("dateAndTime", new Date(dateAndTime));
-			trip.set("busCompany", operatorPointer);
-			trip.save()
-			.then(
-				function(){
-					successMessage.style.display = "block";
-					var timeoutID = window.setTimeout(function(){ loader.style.display = "none"; }, 500);
-				}),
-				function(err){ console.log("An issue popped up. Error code: " + err.code + "was returned by the server."); }
-		});
-
-		// Reset fields
-		// Add progress screen
-
+		// Steps
 
 	},
 	generateScheduleOptions : function( busCompany, parentNodeID, childClass, key ) {
@@ -461,6 +414,20 @@ window.onload = function(){
 	var currentUser = Parse.User.current();
 	var currLoc = location.href;
 	var currUserAffiliation;
+
+	if ( currLoc.indexOf("index.html") > -1) {
+			if( currentUser == null ){
+				location.href = "login.html";	
+			} else {
+				var parent = document.getElementById("navigation");
+				var outBtn = document.createElement("button");
+				outBtn.setAttribute("id", "logout");
+				outBtn.setAttribute("onclick", "app.logout()");
+				outBtn.innerHTML = "Logout";
+				parent.appendChild(outBtn);				
+			}
+	}
+
 	if( currentUser.get("affiliation") != null ) {
 		currUserAffiliation = currentUser.get("affiliation").id;
 	}
@@ -509,21 +476,7 @@ window.onload = function(){
 	}
 	
 
-	if (!currentUser && currLoc.indexOf("login.html") == -1 ) {
-		
-		if (currLoc.indexOf("adminAccount.html") == -1){
-			location.href = "login.html";	
-		}
-	} else {
-		if( currLoc.indexOf("login.html") == -1 && currLoc.indexOf("adminAccount.html") == -1 ) {
-			var parent = document.getElementById("navigation");
-			var outBtn = document.createElement("button");
-			outBtn.setAttribute("id", "logout");
-			outBtn.setAttribute("onclick", "app.logout()");
-			outBtn.innerHTML = "Logout";
-			parent.appendChild(outBtn);
-		}
-	}
+
 
 	if( currLoc.indexOf("viewTrip.html") != -1 ){
 		app.searchTrip(currUserAffiliation);
@@ -532,29 +485,7 @@ window.onload = function(){
 	if( currLoc.indexOf("createTrip.html")  != -1 ){
 		var loader = document.getElementById("loader");
 		loader.style.display = "block";
-
-		//app.generateScheduleOptions(currUserAffiliation, "selectSchedule", "", "scheduleCode");
-		// app.generateTerminalOptions("selectOrigin", "");
-		// app.generateTerminalOptions("selectDestination", "");
-		// app.generatePlateOptions(currUserAffiliation, "selectPlate", "");
-		
 		var timeoutID = window.setTimeout(function(){ loader.style.display = "none"; }, 2000);
-		// var scheduleSelect = document.getElementById("selectSchedule");
-		// scheduleSelect.onchange = function(){
-		// 	var timeOutput = document.getElementById("scheduleTime"),
-		// 		dayOutput = document.getElementById("scheduleDay"),
-		// 		value = this.options[this.selectedIndex].text;
-
-		// 	var scheduleQuery = new Parse.Query("Schedule");
-		// 	scheduleQuery.equalTo("scheduleCode", value);
-		// 	scheduleQuery.first({
-		// 		success : function(res){
-		// 			timeOutput.value = res.get("departureTime");
-		// 			dayOutput.value = res.get("day");
-		// 		},
-		// 		error : function(err){ console.log(err.code); }
-		// 	})
-		// };
 
 		var busSelect = document.getElementById("selectPlate");
 		busSelect.onchange = function(){
@@ -609,8 +540,3 @@ window.onload = function(){
 		});
 	}
 }
-
-// Reload
-// Client Function:  send value and user id (of object to be edited)
-// Cloud function: look for the user, update value 
-// Parse.Cloud.Run("reload", {"objectId": id, "value": value})

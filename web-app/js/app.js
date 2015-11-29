@@ -87,29 +87,6 @@ var app = {
 		    },
 		    error: function(error) {}
 		});
-		
-		// var query = new Parse.Query(Parse.User);
-		// query.equalTo("username", uname);
-		// query.find({
-		// 	success: function(results){
-		// 		// console.log(results[0].get("affiliation"));
-		// 		if(results[0].get("affiliation") != null ){
-		// 			Parse.User.logIn(uname, pass, {
-		// 				success: function(user){
-		// 					console.log("success");
-		// 					window.location = "index.html";
-		// 				},
-		// 				error: function(user, error){
-		// 					console.log("Error " + error.code + " " + error.message);
-		// 				}
-		// 			});
-		// 		} else {
-
-		// 		}
-		// 	},
-		// 	error: function(error){	console.log(error.code); }
-		// });
-		
 	},
 	clerkLogin : function ( uname, pass ) {
 		var queryRole = new Parse.Query(Parse.Role);
@@ -164,22 +141,16 @@ var app = {
 		var tripQuery = new Parse.Query("Trip");
 		var busQuery = new Parse.Query("Bus_Company");
 		busQuery.equalTo('objectId', busCompany);
-		// tripQuery.include('origin');
-		// tripQuery.include('destination');
 		tripQuery.include('assignedBus');
-		// tripQuery.include('dateAndTime');
-		// tripQuery.include('busCompany');
 		tripQuery.matchesQuery('busCompany', busQuery);
+		tripQuery.ascending('dateAndTime');
 		tripQuery.find({
 			success : function(results){
 				var listParent = document.getElementsByClassName("tripList")[0];
 				for(var i = 0; i < results.length; i++){
-					// var origin = results[i].get("origin").get("location");
-					// var destination = results[i].get("destination").get("location");
-					// var departureTime = results[i].get("assignedSchedule").get("scheduleCode");
 					var plateNumber = results[i].get("assignedBus").get("plateNumber");
 					var busType = results[i].get("assignedBus").get("busType");
-					var date = results[i].get("dateAndTime");
+					var date = moment(results[i].get("dateAndTime")).format("DD MMM YYYY hh:mm A ddd");
 					
 					var listItem = document.createElement("li");
 					listItem.setAttribute("class", "tripList__item card");
@@ -189,18 +160,6 @@ var app = {
 					listItemSpan1.innerHTML = "Date: " + date;
 					listItem.appendChild(listItemSpan1);
 					listParent.appendChild(listItem);
-
-					// var listItemSpan2 = document.createElement("span");
-					// listItemSpan2.setAttribute("class", "tripList__itemInfo");
-					// listItemSpan2.innerHTML = "Destination: " + destination;
-					// listItem.appendChild(listItemSpan2);
-					// listParent.appendChild(listItem);
-
-					// var listItemSpan3 = document.createElement("span");
-					// listItemSpan3.setAttribute("class", "tripList__itemInfo");
-					// listItemSpan3.innerHTML = "Departure: " + departureTime;
-					// listItem.appendChild(listItemSpan3);
-					// listParent.appendChild(listItem);
 
 					var listItemSpan4 = document.createElement("span");
 					listItemSpan4.setAttribute("class", "tripList__itemInfo");
@@ -224,9 +183,6 @@ var app = {
 		// search for id of each parameter
 		// create a pointer using the helper function
 
-		// var originTerminal = helper.getSelectedOption("selectOrigin");
-		// var destinationTerminal = helper.getSelectedOption("selectDestination");
-		// var chosenSchedule = helper.getSelectedOption("selectSchedule");
 		var chosenBus = helper.getSelectedOption("selectPlate");
 		var chosenDate = document.getElementById("selectDate").value;
 		var chosenTime = document.getElementById("selectTime").value;
@@ -258,21 +214,11 @@ var app = {
 			var trip = new Trip();
 			trip.set("assignedBus", busPointer);
 			trip.set("dateAndTime", new Date(dateAndTime));
-			// trip.set("origin", originPointer);
-			// trip.set("destination", destinationPointer);
 			trip.set("busCompany", operatorPointer);
 			trip.save()
 			.then(
 				function(){
-					// alert("Trip was created successfully.");
-					// helper.fadeToggle( successMessage, 250 );
 					successMessage.style.display = "block";
-					// helper.resetSelectElement("selectOrigin");
-					// helper.resetSelectElement("selectDestination");
-					// helper.resetSelectElement("selectSchedule");
-					// helper.resetSelectElement("selectPlate");
-					// var typeOutput = document.getElementById("busType");
-					// typeOutput.value = "";
 					var timeoutID = window.setTimeout(function(){ loader.style.display = "none"; }, 500);
 				}),
 				function(err){ console.log("An issue popped up. Error code: " + err.code + "was returned by the server."); }
@@ -336,15 +282,18 @@ var app = {
 			error : function(err){ console.log(err.code); }
 		});
 	},
-	reload : function(){
-		var cell = document.getElementById("cellphone_number").value,
+	reload : function(userID){
+		console.log(userID)
+		var cell = document.getElementById("cellNum").value,
 			amt = document.getElementById("amount").value,
 			intAmt = parseInt(amt),
-			row = document.getElementById("load_card");
+			row = document.getElementById("searchResults");
 
-		var accountDetailDiv = document.createElement("div"),
+		var accountDetailDiv = document.createElement("li"),
 			accountName = document.createElement("p"),
 			accountAmt = document.createElement("p");
+
+			// Get currUserID, cellPhone, creditsLoaded
 			
 
 		var query = new Parse.Query(Parse.User);
@@ -353,26 +302,29 @@ var app = {
 			success: function(results){
 				for (var i = 0; i < results.length; i++) {
 			      var object = results[i];
-			      alert(object.get('load'));
+			      var id = object.id;
+			      // alert(typeof object.get('creditsRemaining'));
+			      var newBalance = parseInt(object.get('creditsRemaining')) + intAmt;
 			      accountNameText = document.createTextNode("Name: " + object.get('username'));
-			      accountAmtText = document.createTextNode("Previous Balance: " + object.get('load'));
+			      accountAmtText = document.createTextNode("New Balance: " + newBalance );
 			      accountName.appendChild(accountNameText);
 			      accountAmt.appendChild(accountAmtText);
 			      accountDetailDiv.appendChild(accountName);
 			      accountDetailDiv.appendChild(accountAmt);
 			      row.appendChild(accountDetailDiv);
 
-			      var intLoad = parseInt(object.get('load'));
-			      var newLoad = intLoad+intAmt;
-			      object.set("load", newLoad.toString());
-			      object.save(null,{
-			      	success: function(object){
-			      		console.log("Saved.");
-			      	},
-			      	error: function(error){
-			      		console.log("Error " + error.code + " " + error.message);
-			      	}
-			      });
+			      // console.log(object);
+
+			      Parse.Cloud.run('reloadUser', { credits: intAmt, objectID: id, userID: userID }, {
+					  success: function(res) {
+					    // ratings should be 4.5
+					    console.log("success")
+					    console.log(res);
+					  },
+					  error: function(error) {
+					  	console.log("Error " + error.code + " : " + error.message);
+					  }
+					});
 			    }
 			},
 			error: function(error){
@@ -436,7 +388,7 @@ var app = {
 			 	var daysInCurrMonth = monthMoment.daysInMonth();
 			 	console.log("Days In Current Month:" + daysInCurrMonth);
 			 	for( var j = 1;  j <= daysInCurrMonth; j++ ){
-			 		var currentDate = moment(monthMoment.year()+"-"+(monthMoment.month()+1)+"-"+j, "YYYY-MM-D");
+			 		var currentDate = moment(monthMoment.year()+"-"+(monthMoment.month()+1)+"-"+j, "YYYY-MM-DD");
 			 		console.log("Current Date: " + currentDate);
 			 		var currentisoWeekday = currentDate.isoWeekday();
 			 		console.log("ISO DATE: " + currentisoWeekday);
@@ -466,11 +418,6 @@ var app = {
 			 		}
 			 		console.log("Weekday: " + currentWeekday);
 			 		console.log("Date: " + currentDate.format("YYYY-MM-DD ddd") + " Day: " + currentWeekday);
-			 		var dateAndTimeStr = currentDate.format("YYYY-MM-DD") + " " + "08:00";
-			 		var dateAndTime = moment(dateAndTimeStr);
-			 		console.log(dateAndTime.toDate());
-			 		
-			 		// tempTrip.save();
 			 		(function(busCompanyQuery, busCompanyValue, weekdayValue, dateAndTimeValue){
 
 			 			if(busPointer > busArray.length){ busPointer = 0; }
@@ -482,8 +429,9 @@ var app = {
 				 			success: function(res){
 
 				 				for(var k = 0; k < res.length; k++){
-				 					var dateAndTimeStr = dateAndTimeValue.format("YYYY-MM-DD") + " " + res[k].get("departureTime");
-				 					var dateAndTimeMoment = moment(dateAndTimeStr)
+				 					var timeArr = res[k].get("departureTime").split(":");
+				 					var dateAndTimeStr = dateAndTimeValue.add(timeArr[0],"h").add(timeArr[1],"m");
+				 					var dateAndTimeMoment = moment(dateAndTimeStr);
 				 					var Trip = new Parse.Object.extend("Trip");
 							 		var tempTrip = new Trip();
 							 		tempTrip.set("assignedSchedule", helper.pointerTo(res[k].id, "Schedule"));
@@ -496,61 +444,16 @@ var app = {
 								 			console.log("yay");
 								 		}, 
 								 		error:function(err){ console.log(err); }});
-				 					console.log(helper.pointerTo(res[k].id, "Schedule"));
-									console.log(pointerToBus);
-									console.log(helper.pointerTo(busCompanyValue, "Bus_Company"));
-									console.log(dateAndTimeMoment.toDate());
 				 				}
 				 				
 				 			},
 				 			error: function(err){ console.log(err.code);}
 				 		});
-			 		})(company, currUserAffID, currentWeekday,currentDate)
-			 		// 		var bp = 0;
-			 		// 		if (bp > busArray.length){
-			 		// 			bp = 0
-			 		// 		}
-			 		// 		console.log(currentWeekday + " " +res.length);
-			 		// 		// for (var i = 0; i <= res.length-1; i++) {
-			 		// 		// 	var time = res[i].get("departureTime");
-			 		// 		// 	var date = currentDate.format("YYYY-MM-DD");
-			 		// 		// 	var dateAndTimeStr = date+ " " + time;
-			 		// 		// 	var dateAndTime = moment(date+ " " + time, "YYYY-MM-DD HH:mm");
-			 		// 		// 	// console.log(typeof dateAndTime);
-			 		// 		// 	var objPointer = helper.pointerTo(res[i].id, "Schedule");
-			 		// 		// 	console.log(objPointer)
-			 		// 		// 	var pointerToBus = helper.pointerTo(busArray[bp++], "Bus");
-			 		// 		// 	console.log(pointerToBus);
-			 		// 		// 	var busComp = helper.pointerTo(currUserAffID, "Bus_Company");
-			 		// 		// 	console.log(busComp);
-			 		// 		// 	var Trip = new Parse.Object.extend("Trip");
-						// 		// var trip = new Trip();
-			 		// 		// 	trip.set("assignedSchedule", objPointer);
-			 		// 		// 	trip.set("assignedBus", pointerToBus);
-			 		// 		// 	trip.set("busCompany", busComp);
-			 		// 		// 	trip.set("dateAndTime", dateAndTime.toDate());
-			 		// 		// 	trip.set("seatNumber", 50);
-			 		// 		// 	trip.save(null, {
-			 		// 		// 		success: function(res){ console.log("yas"); },
-			 		// 		// 		error: function(err){  console.log("Error " + err.code + " : " + err.message); }
-			 		// 		// 	});
-			 		// 		// 	//EVerything is set on the last day only.
-			 		// 		// };
-			 		// 	},
-			 		// 	error: function(err){ console.log("Error " + err.code + ": " + err.message); }
-			 		// });
+			 		})(company, currUserAffID, currentWeekday,currentDate);
 			 	}
 			 	monthMoment = monthMoment.add(1, 'months');
 			}
 		}, function(err){ console.log("Error " + err.code + ": " + err.message); });
-		 
-		
-		// different cases: one month and more than one month
-		// var startMonth = startDate.month()+1;
-		// console.log(startMonth);
-		// for( var i = 0; i < numberOfMonths; i++ ){
-		// 	console.log(startMonth++);
-		// }
 	}
 };
 
@@ -687,21 +590,22 @@ window.onload = function(){
 		var searchBtn = document.getElementById("searchBtn");
 		searchBtn.addEventListener("click", function(){
 			event.preventDefault();
-			var list = document.getElementById("searchResults");
-			list.removeChild(list.firstChild);
-			var num = document.getElementById("cellNum").value;
-			var userQuery = new Parse.Query(Parse.User);
-			// userQuery.equalTo("mobileNumber", num);
-			userQuery.equalTo("cellPhone", num);
-			userQuery.find({
-				success : function(res){
-					var item = document.createElement("li");
-					item.innerHTML = "Username: " + res[0].get("username") + " Credits: " + res[0].get("creditsRemaining");
-					// item.innerHTML = res[0].get("creditsRemaining");
-					list.appendChild(item);
-				},
-				error : function(err){ console.log(err.code); }
-			})
+			// var list = document.getElementById("searchResults");
+			// list.removeChild(list.firstChild);
+			// var num = document.getElementById("cellNum").value;
+			// var userQuery = new Parse.Query(Parse.User);
+			// // userQuery.equalTo("mobileNumber", num);
+			// userQuery.equalTo("cellPhone", num);
+			// userQuery.find({
+			// 	success : function(res){
+			// 		var item = document.createElement("li");
+			// 		item.innerHTML = "Username: " + res[0].get("username") + " Credits: " + res[0].get("creditsRemaining");
+			// 		// item.innerHTML = res[0].get("creditsRemaining");
+			// 		list.appendChild(item);
+			// 	},
+			// 	error : function(err){ console.log(err.code); }
+			// })
+		app.reload(currentUser.id);
 		});
 	}
 }

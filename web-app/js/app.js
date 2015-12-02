@@ -5,6 +5,9 @@ var helper = {
 	pointerTo : function(objectId, klass) {
     	return { __type:"Pointer", className:klass, objectId:objectId };
 	},
+	/*
+	* Append to parent
+	*/
 	appendUsingID : function( parentID, elementName, elementClass, content ) {
 		var parent = document.getElementById(parentID);
 		var child = document.createElement(elementName);
@@ -50,7 +53,7 @@ var helper = {
 }
 
 var app = {
-	login : function(){
+	login : function(event){
 		event.preventDefault();
 
 		var uname = document.getElementById("login_uname").value,
@@ -118,7 +121,7 @@ var app = {
 			error : function(err){}
 		});
 	},
-	logout : function() {
+	logout : function(event) {
 		event.preventDefault();
 		Parse.User.logOut();
 		location.href="login.html";
@@ -137,13 +140,36 @@ var app = {
 			error: function(error){	console.log(error.code); }
 		});
 	},
-	searchTrip : function(busCompany) {
+	searchTrip : function(busCompany, searchByParameter, searchTerm) {
 		var tripQuery = new Parse.Query("Trip");
 		var busQuery = new Parse.Query("Bus_Company");
 		busQuery.equalTo('objectId', busCompany);
 		tripQuery.include('assignedBus');
 		tripQuery.matchesQuery('busCompany', busQuery);
 		tripQuery.ascending('dateAndTime');
+
+		switch(searchByParameter){
+			case "Day":
+				var subQuery = new Parse.Query("Schedule");
+				subQuery.equalTo("day", searchTerm);
+				tripQuery.matchesQuery("assignedSchedule", subQuery);
+				break;
+			case "Date":
+				var searchArr = searchTerm.split(",");
+				var minTerm = new Date(searchArr[0]);
+				console.log(minTerm);
+				var maxTerm = new Date(searchArr[1]);
+				console.log(maxTerm);
+				tripQuery.greaterThanOrEqualTo("dateAndTime", minTerm);
+				tripQuery.lessThanOrEqualTo("dateAndTime", maxTerm);
+				break;
+			case "Time":
+				var subQuery = new Parse.Query("Schedule");
+				subQuery.equalTo("departureTime", searchTerm);
+				tripQuery.matchesQuery("assignedSchedule", subQuery);
+				break;
+		}
+
 		tripQuery.find({
 			success : function(results){
 				var listParent = document.getElementsByClassName("tripList")[0];
@@ -151,6 +177,7 @@ var app = {
 					var plateNumber = results[i].get("assignedBus").get("plateNumber");
 					var busType = results[i].get("assignedBus").get("busType");
 					var date = moment(results[i].get("dateAndTime")).format("DD MMM YYYY hh:mm A ddd");
+					console.log(typeof results[i].get("dateAndTime"));
 					
 					var listItem = document.createElement("li");
 					listItem.setAttribute("class", "tripList__item card");
@@ -158,6 +185,7 @@ var app = {
 					var listItemSpan1 = document.createElement("span");
 					listItemSpan1.setAttribute("class", "tripList__itemInfo");
 					listItemSpan1.innerHTML = "Date: " + date;
+					console.log(date);
 					listItem.appendChild(listItemSpan1);
 					listParent.appendChild(listItem);
 
@@ -175,12 +203,35 @@ var app = {
 
 				}
 			},
-			error : function(error){ console.log(error.code); }
+			error : function(err){ console.log("Error " + err.code + " : " + err.message); }
 		});
 	},
-	createTrip : function( currUserAffiliation ) {
-		// Steps
+	createTrip : function( currUserAffiliation, skedID, dateAndTimeValue, busID ) {
 
+		var busQuery = new Parse.Query("Bus");
+		busQuery.equalTo("objectId", busID);
+		busQuery.first()
+		.then(function(response){
+			console.log(busID);
+			var seats = response.get("seatNumber");
+			var skedQuery = new Parse.Query("Schedule");
+			skedQuery.equalTo("objectId", skedID);
+			skedQuery.first()
+			.then(function(response){
+				var chosenSked = response.id;
+				var Trip = new Parse.Object.extend("Trip")
+				var createTrip = new Trip();
+				createTrip.set("busCompany", helper.pointerTo(currUserAffiliation, "Bus_Company"));
+				createTrip.set("assignedBus", helper.pointerTo(busID, "Bus"));
+				createTrip.set("assignedSchedule", helper.pointerTo(chosenSked, "Schedule"));
+				createTrip.set("dateAndTime", moment(dateAndTimeValue).toDate());
+				createTrip.set("seatNumber", seats);
+				createTrip.save({
+					success: function(res){ console.log( "Success!" ); var loader = document.getElementById("loader"); loader.style.display = "none"; },
+					error: function(err){ console.log("Error " + err.code + " : " + err.message ); }
+				});
+			});
+		});
 	},
 	generateScheduleOptions : function( busCompany, parentNodeID, childClass, key ) {
 		// To be used in tne onload event
@@ -298,22 +349,47 @@ var app = {
 			console.log(Parse.User.current());
 		});
 	},
-	createSchedule : function(){},
+	createSchedule : function(skedDay, skedTime, originTerminal, destinationTerminal, busCompany){
+		var Schedule = new Parse.Object.extend("Schedule");
+		var createdSked = new Schedule();
+		createdSked.set("day", skedDay);
+		createdSked.set("departureTime", skedTime);
+		createdSked.set("origin", helper.pointerTo(originTerminal, "Terminal"));
+		createdSked.set("destination", helper.pointerTo(destinationTerminal, "Terminal"));
+		createdSked.set("busCompany", helper.pointerTo(busCompany, "Bus_Company"));
+		createdSked.save({
+			success: function(res){ console.log("SUCCESS!"); },
+			error: function(err){ console.log( "Error " + err.code + " : "  + err.message ); }
+		});
+		// Get Time
+		// Get Origin
+		// Get Destination
+		// Get Bus Company
+		// Create 4 pointers for the above
+		// Save
+	},
 	viewSchedule : function(){},
+	deleteSchedule : function(scheduleDay, scheduleTime){
+		var sked;
+		var skedQuery = new Parse.Query("Schedule");
+		skedQuery.equalTo("departureTime", scheduleTime);
+		skedQuery.equalTo("day", scheduleDay);
+		skedQuery.first()
+		.then(function(res){
+			sked = res;
+			console.log(res);
+			sked.destroy({
+				success: function(response){ console.log("Success") },
+				error: function(err){ console.log("Error " + err.code + " : " + err.message); }
+			})
+		})
+	},
 	autoGenerateSchedule : function(currUserAffiliation){
 		// var mondayTimes = [8:00, 10:00, 12:00, 14:00, 16:00, 18:00, 20:00];
 		var startDate = moment(document.getElementById("startDate").value, "YYYY-MM");
 		var endDate = moment(document.getElementById("endDate").value, "YYYY-MM");
 		console.log(document.getElementById("startDate").value);
 
-		// Parse.Cloud.run("generateTrip", { 
-		// 	startDate: startDate,
-		// 	endDate: endDate,
-		// 	currUserAffiliation: currUserAffiliation
-		// },{
-		// 	success: function(res){ console.log(res); },
-		// 	error: function(err){ console.log(err);}
-		// });
 		var currUserAffID = currUserAffiliation;
 		var numberOfMonths = endDate.diff(startDate, 'months');
 			// number of months should be: endDATE - startDate
@@ -370,7 +446,7 @@ var app = {
 			 				break;
 			 		}
 			 		console.log("Weekday: " + currentWeekday);
-			 		console.log("Date: " + currentDate.format("YYYY-MM-DD ddd") + " Day: " + currentWeekday);
+			 		console.log("Date: " + currentDate.format("YYYY-MM-DD HH:mm ddd") + " Day: " + currentWeekday + "Hour: " + currentDate.hour());
 			 		(function(busCompanyQuery, busCompanyValue, weekdayValue, dateAndTimeValue){
 
 			 			if(busPointer > busArray.length){ busPointer = 0; }
@@ -378,13 +454,17 @@ var app = {
 			 			var skedQuery = new Parse.Query("Schedule");
 				 		skedQuery.matchesQuery("busCompany", busCompanyQuery);
 				 		skedQuery.equalTo("day", weekdayValue);
+				 		var dateAndTimeValueClone = dateAndTimeValue.clone();
 				 		skedQuery.find({
 				 			success: function(res){
-
+				 				// console.log("Start " + dateAndTimeValue.format("HH:mm"));
 				 				for(var k = 0; k < res.length; k++){
 				 					var timeArr = res[k].get("departureTime").split(":");
-				 					var dateAndTimeStr = dateAndTimeValue.add(timeArr[0],"h").add(timeArr[1],"m");
+				 					// console.log("Day: " + weekdayValue + " " + timeArr[0] + " " + dateAndTimeValue.hour());
+				 					var dateAndTimeStr = dateAndTimeValueClone.add(parseInt(timeArr[0]),"h").add(parseInt(timeArr[1]),"m");
+				 					dateAndTimeValueClone = dateAndTimeValue.clone();
 				 					var dateAndTimeMoment = moment(dateAndTimeStr);
+				 					console.log(dateAndTimeStr);
 				 					var Trip = new Parse.Object.extend("Trip");
 							 		var tempTrip = new Trip();
 							 		tempTrip.set("assignedSchedule", helper.pointerTo(res[k].id, "Schedule"));
@@ -398,7 +478,7 @@ var app = {
 								 		}, 
 								 		error:function(err){ console.log(err); }});
 				 				}
-				 				
+				 				// console.log("End " + dateAndTimeValue.format("HH:mm"));
 				 			},
 				 			error: function(err){ console.log(err.code);}
 				 		});
@@ -407,6 +487,41 @@ var app = {
 			 	monthMoment = monthMoment.add(1, 'months');
 			}
 		}, function(err){ console.log("Error " + err.code + ": " + err.message); });
+	},
+	generateOptions : function( busCompany, parentNodeID, childClass, parseObject, objectKey ){
+		var objQuery = new Parse.Query(parseObject);
+		var busQuery = new Parse.Query("Bus_Company");
+		busQuery.equalTo('objectId', busCompany);
+		objQuery.matchesQuery("busCompany", busQuery);
+		objQuery.find({
+			success: function(res){
+				for (var i = res.length - 1; i >= 0; i--) {
+					var content = res[i].get(objectKey);
+					helper.appendUsingID(parentNodeID, "option", "", content);
+				};
+			},
+			error: function(err){ console.log("Error " + err.code + " : " + err.message ) }
+		});
+	},
+	addBus : function( currUserAffiliation, plateNumber, busType, seatNumber, seatCost ){
+
+		var addBus = new Parse.Object("Bus");
+		addBus.set("operator", helper.pointerTo(currUserAffiliation, "Bus_Company"));
+		console.log("I AM IN APP 1");
+		addBus.set("plateNumber", plateNumber);
+		console.log("I AM IN APP 2");
+		addBus.set("busType", busType);
+		console.log("I AM IN APP 3");
+		addBus.set("seatNumber", seatNumber);
+		console.log("I AM IN APP 4");
+		addBus.set("seatCost", seatCost);
+		console.log(addBus);
+		addBus.save(null,{
+			success: function(){
+				alert("Bus with plate number: " + plateNumber + " scucessfully added!");
+			},
+			error: function(err){ console.log("Error " + err.code + " : " + err.message ); }
+		});
 	}
 };
 
@@ -415,14 +530,19 @@ window.onload = function(){
 	var currLoc = location.href;
 	var currUserAffiliation;
 
-	if ( currLoc.indexOf("index.html") > -1) {
+	if ( currLoc.indexOf("index.html") > -1 || 
+		 currLoc.indexOf("createTrip.html") > -1 ||
+		 currLoc.indexOf("viewTrip.html") > -1 ||
+		 currLoc.indexOf("companyMgmt.html") > -1 ||
+		 currLoc.indexOf("viewSchedules.html") > -1 || 
+		 currLoc.indexOf("reload.html") > -1 ) {
 			if( currentUser == null ){
 				location.href = "login.html";	
 			} else {
 				var parent = document.getElementById("navigation");
 				var outBtn = document.createElement("button");
 				outBtn.setAttribute("id", "logout");
-				outBtn.setAttribute("onclick", "app.logout()");
+				outBtn.setAttribute("onclick", "app.logout(event)");
 				outBtn.innerHTML = "Logout";
 				parent.appendChild(outBtn);				
 			}
@@ -479,13 +599,146 @@ window.onload = function(){
 
 
 	if( currLoc.indexOf("viewTrip.html") != -1 ){
-		app.searchTrip(currUserAffiliation);
+		
+		var tempDrop = document.getElementById("searchOptions");
+		tempDrop.onchange = function(){
+			var searchBox = document.getElementById("tripSearch");
+			var temp = helper.getSelectedOption("searchOptions");
+			switch( temp ){
+				case "Day":
+					searchBox.setAttribute("placeholder", "Format: Monday");
+					break;
+				case "Date":
+					searchBox.setAttribute("placeholder", "Format: December 1, 2015");
+					break;
+				case "Time":
+					searchBox.setAttribute("placeholder", "Format: 01:00 AM");
+					break;
+			}
+		}
+		var searchBtn = document.getElementById("searchBtn");
+		searchBtn.addEventListener("click", function(event){
+			event.preventDefault();
+			var searchByParameter = helper.getSelectedOption("searchOptions");
+			var searchTerm = document.getElementById("tripSearch").value;
+			var tripList = document.getElementById("tripList");
+			if( tripList.length != 0 ){
+				while( tripList.firstChild ){
+					tripList.removeChild(tripList.firstChild);
+				}
+			}
+
+			switch( searchByParameter ){
+				case "Day":
+					// app.searchTrip(currUserAffiliation, searchByParameter, searchTerm);	
+					break;
+				case "Date":
+					var date = new Date( searchTerm );
+					var dateMoment = moment(date);
+					console.log(dateMoment);
+					var dateMomentMax = dateMoment.clone();
+					dateMomentMax.add(23, "h").add(59, 'm');
+					console.log(dateMomentMax);
+					searchTerm = dateMoment.toISOString() + "," + dateMomentMax.toISOString();
+
+					// app.searchTrip(currUserAffiliation, searchByParameter, searchTerm);	
+					break;
+				case "Time":
+					var message = document.getElementById("timeError");
+					if (!searchTerm.match(/^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/)){
+						message.style.display = "block";
+					} else {
+						message.style.display = "none";
+						var searchArr = searchTerm.split(" ");
+						if (searchArr[1] == "PM" || searchArr[1] == "pm"){
+							var time = searchArr[0].split(":");
+							var hour = parseInt(time[0]) + 12;
+							searchTerm = hour+":"+time[1];
+							console.log(searchTerm);
+						} else {
+							searchTerm = searchArr[0];
+						}
+					}
+					break;
+			}
+			app.searchTrip(currUserAffiliation, searchByParameter, searchTerm);	
+			
+		});
+		
 	}
 
 	if( currLoc.indexOf("createTrip.html")  != -1 ){
+
+		/* Loader Settings */
 		var loader = document.getElementById("loader");
 		loader.style.display = "block";
 		var timeoutID = window.setTimeout(function(){ loader.style.display = "none"; }, 2000);
+
+		/* Create Trip */
+
+		var dayCreate = document.getElementById("selectScheduleDay"),
+			timeCreate = document.getElementById("selectScheduleTime"),
+			dateCreate = document.getElementById("selectTripDate"),
+			tripOrigin = document.getElementById("tripOrigin"),
+			tripDest = document.getElementById("tripDestination"),
+			createTripBtn = document.getElementById("createTrip__btn");
+		var chosenDay, chosenTime, busID, dateValue, origin, destination;
+
+		app.generateTerminalOptions("tripOrigin", "");
+		app.generateTerminalOptions("tripDestination", "");
+		app.generatePlateOptions( currUserAffiliation, "selectPlate", "" );
+
+		dateCreate.onchange = function(){
+			dateValue = dateCreate.value;
+			var dateValueClone = moment(dateValue).clone();
+			var dateDay =  dateValueClone.day();
+	 		switch( dateDay ){
+	 			case 1:
+	 				chosenDay = "Monday";
+	 				break;
+	 			case 2:
+	 				chosenDay = "Tuesday";
+	 				break;
+	 			case 3:
+	 				chosenDay = "Wednesday";
+	 				break;
+	 			case 4:
+	 				chosenDay = "Thursday";
+	 				break;
+	 			case 5:
+	 				chosenDay = "Friday";
+	 				break;
+	 			case 6:
+	 				chosenDay = "Saturday";
+	 				break;
+	 			case 7:
+	 				chosenDay = "Sunday";
+	 				break;
+	 		}
+	 		// console.log(chosenDay)
+	 		if( timeCreate.length != 0 ){
+				while( timeCreate.firstChild ){
+					timeCreate.removeChild(timeCreate.firstChild);
+				}
+			}
+			// console.log(scheduleDay)
+			var skedQuery = new Parse.Query("Schedule");
+			skedQuery.equalTo("day", chosenDay);
+			skedQuery.descending("departureTime");
+			skedQuery.find({
+				success: function(res){
+					for (var i = res.length - 1; i >= 0; i--) {
+						var content = res[i].get("departureTime");
+						helper.appendUsingID("selectScheduleTime", "option", "", content);
+					};
+				},
+				error: function(err){ console.log("Error " + err.code + " : " + err.message ); }
+			});
+
+			timeCreate.onchange = function(){
+				chosenTime = helper.getSelectedOption("selectScheduleTime");
+			}
+		}
 
 		var busSelect = document.getElementById("selectPlate");
 		busSelect.onchange = function(){
@@ -494,23 +747,58 @@ window.onload = function(){
 			var busQuery = new Parse.Query("Bus");
 			busQuery.equalTo("plateNumber", value);
 			busQuery.first({
-				success : function(res){ typeOutput.value = res.get("busType"); },
+				success : function(res){ typeOutput.value = res.get("busType"); busID = res.id; },
 				error : function(err){ console.log(err.code); }
 			});
-		};
 
+		};
 
 		var submitBtn = document.getElementById("createTrip__btn");
 		// submitBtn.onclick = app.createTrip(currUserAffiliation);
-		submitBtn.addEventListener("click", function(){
+		submitBtn.addEventListener("click", function(event){
 			event.preventDefault();
-			var loader = document.getElementById("loader");
-			loader.style.display = "block";
-			app.createTrip(currUserAffiliation);
+			console.log(busID);
+			origin = helper.getSelectedOption("tripOrigin");
+			destination = helper.getSelectedOption("tripDestination");
+
+			var originQuery = new Parse.Query("Terminal");
+			originQuery.equalTo("location", origin);
+			originQuery.find().then(function(res){ console.log(res); });
+
+			var destinationQuery = new Parse.Query("Terminal");
+			destinationQuery.equalTo("location", destination);
+			destinationQuery.find().then(function(res){ console.log(res); });
+
+			var idQuery = new Parse.Query("Schedule");
+			idQuery.equalTo("day", chosenDay);
+			idQuery.equalTo("departureTime", chosenTime);
+			idQuery.matchesQuery("origin", originQuery);
+			idQuery.matchesQuery("destination", destinationQuery);
+			idQuery.first({
+				success: function(res){
+					var loader = document.getElementById("loader");
+					loader.style.display = "block";
+					var dateAndTimeValue = dateValue + " " + chosenTime;
+					// console.log(res);
+					if ( res == undefined ){
+						alert("No schedule with the given parameters exist.");
+						loader.style.display = "none";
+					} else {
+						app.createTrip(currUserAffiliation, res.id , dateAndTimeValue, busID);
+					}
+				},
+				error: function(err){
+					console.log("Error " +  err.code + " : " + err.message );
+				}
+			});
+
+			
 		});
 
+		/* Auto Generate */
+
 		var autoGenerate = document.getElementsByClassName("generateTrips__btn")[0];
-		autoGenerate.addEventListener("click", function(){
+		autoGenerate.addEventListener("click", function(event){
 			event.preventDefault();
 			app.autoGenerateSchedule(currUserAffiliation);
 		});
@@ -519,24 +807,126 @@ window.onload = function(){
 
 	if ( currLoc.indexOf("reload.html") > -1 ) {
 		var searchBtn = document.getElementById("searchBtn");
-		searchBtn.addEventListener("click", function(){
-			event.preventDefault();
-			// var list = document.getElementById("searchResults");
-			// list.removeChild(list.firstChild);
-			// var num = document.getElementById("cellNum").value;
-			// var userQuery = new Parse.Query(Parse.User);
-			// // userQuery.equalTo("mobileNumber", num);
-			// userQuery.equalTo("cellPhone", num);
-			// userQuery.find({
-			// 	success : function(res){
-			// 		var item = document.createElement("li");
-			// 		item.innerHTML = "Username: " + res[0].get("username") + " Credits: " + res[0].get("creditsRemaining");
-			// 		// item.innerHTML = res[0].get("creditsRemaining");
-			// 		list.appendChild(item);
-			// 	},
-			// 	error : function(err){ console.log(err.code); }
-			// })
-		app.reload(currentUser.id);
+		searchBtn.addEventListener("click", function(event){
+			event.preventDefault(event);
+			app.reload(currentUser.id);
 		});
 	}
+
+	if ( currLoc.indexOf("companyMgmt.html") > -1 ) {
+		var loader = document.getElementById("loader");
+		loader.style.display = "block";
+		app.generateTerminalOptions("originTerminal", "terminalOption");
+		app.generateTerminalOptions("destinationTerminal", "terminalOption");
+		
+		var daySelect = document.getElementById("availableDay");
+		var timeSelect = document.getElementById("availableTime");
+		var scheduleDay, scheduleTime;
+
+		daySelect.onchange = function(){
+			scheduleDay = helper.getSelectedOption("availableDay");
+			if( timeSelect.length != 0 ){
+				while( timeSelect.firstChild ){
+					timeSelect.removeChild(timeSelect.firstChild);
+				}
+			}
+			console.log(scheduleDay)
+			var skedQuery = new Parse.Query("Schedule");
+			skedQuery.equalTo("day", scheduleDay);
+			skedQuery.descending("departureTime");
+			skedQuery.find({
+				success: function(res){
+					for (var i = res.length - 1; i >= 0; i--) {
+						var content = res[i].get("departureTime");
+						helper.appendUsingID("availableTime", "option", "", content);
+					};
+				},
+				error: function(err){ console.log("Error " + err.code + " : " + err.message ); }
+			});
+
+			timeSelect.onchange = function(){
+				scheduleTime = helper.getSelectedOption("availableTime");
+			}
+
+			var delSkedBtn = document.getElementById("deleteSked__btn");
+			delSkedBtn.addEventListener("click", function(event){
+				event.preventDefault();
+				app.deleteSchedule(scheduleDay, scheduleTime);
+			});
+		}
+
+		var timeoutID = window.setTimeout(function(){ loader.style.display = "none"; }, 2000);
+
+		// CREATE SCHEDULE
+		var skedInput = document.getElementById("skedTime"),
+			skedSelect = document.getElementById("skedDay"),
+		 	originSelect = document.getElementById("originTerminal"),
+		 	destinationSelect = document.getElementById("destinationTerminal"),
+		 	skedDay,
+		 	originSelectValue,
+		 	destinationSelectValue;
+		 var createSkedBtn = document.getElementById("createSked__btn");
+
+		skedSelect.onchange = function(){
+			skedDay = helper.getSelectedOption("skedDay");
+		}
+
+		originSelect.onchange = function(){
+			originSelectValue = helper.getSelectedOption("originTerminal");
+		}
+
+		destinationSelect.onchange = function(){
+			destinationSelectValue = helper.getSelectedOption("destinationTerminal");
+		}
+
+
+		 createSkedBtn.addEventListener("click", function(event){
+		 	event.preventDefault();
+		 	var originTerminal, destinationTerminal;
+		 	var skedTime = skedInput.value;
+
+		 	helper.getParseObjectID("location", originSelectValue, "Terminal")
+		 	.then(function(response){
+		 		originTerminal = response;
+		 		return helper.getParseObjectID("location", destinationSelectValue, "Terminal");
+		 	})
+		 	.then(function(response){
+		 		destinationTerminal = response;
+		 		app.createSchedule( 
+		 			skedDay, 
+					skedTime,
+					originTerminal,
+					destinationTerminal,
+					currUserAffiliation
+		 		);
+		 	});
+		 });
+
+		 // ADD BUS
+
+		var addBusTypeSelect = document.getElementById("typeInput");
+		var addBusBtn = document.getElementById("addBus__btn");
+	 	var addBusType, addBusCost;
+
+	 	// addBusTypeSelect.onchange = function(){
+	 	// 	addBusType = helper.getSelectedOption("typeInput");
+	 	// }
+
+	 	// addBusBtn.addEventListener("click", function(event){
+	 	// 	event.preventDefault();
+		 // 	var addBusPlate = document.getElementById("plateInput").value,
+		 // 	addBusSeat = document.getElementById("seatNumber");
+		 // 	switch( addBusType ){
+		 // 		case "R":
+		 // 			console.log("HI")
+		 // 			addBusCost = 50;
+		 // 			break;
+		 // 		case "D":
+		 // 			addBusCost = 80;
+		 // 			break;
+		 // 	}
+		 // 	app.addBus( currUserAffiliation, addBusPlate, addBusType, addBusSeat, addBusCost );
+	 	// })
+
+		}
 }

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>uBus | Admin System</title>
+		<meta charset="utf-8">
+		<meta name="description" content="uBus Ticket Reservation System administrator tools.">
+		<link rel="icon" type="image/x-icon" href="img/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="css/rolling.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<script src="js/parse-1.6.7.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
+	</head>
+	<body>
+		<header class="header">
+			<a href="index.html" class="header__logo"><img src="img/logo.png" width="40px"></a>
+			<nav class="header__nav" id="navigation">
+				<a href=""></a>
+				<a href=""></a>
+			</nav>
+		</header>
+		<main class="container">
+		<p><a href="index.html"><span class="fa fa-arrow-left fa-2x"></span>&nbsp;Go back</a></p>
+		<h1>Company Management</h1>
+		<div id="loader" style="position: fixed; z-index: 100; width: 100%; height: 100%; display: block; background-color: gray;top: 80px;left: 0;-webkit-opacity: 0.5;">
+				<div class='uil-rolling-css' style='margin:20vh auto; -webkit-transform:scale(0.6);'><div><div></div><div></div></div></div>	
+			</div>
+			<div class="card">
+				<h2>Add a new Schedule</h2>
+				<form class="createSked" id="createSked">
+					<label for="skedTime">
+						<span>Schedule Time (in 24:00) </span>
+						<input type="text" id="skedTime" placeholder="22:00">
+					</label>
+					<label for="skedDay">
+						<span>Schedule Day</span>
+						<select id="skedDay">
+							<option>--</option>
+							<option>Sunday</option>
+							<option>Monday</option>
+							<option>Tuesday</option>
+							<option>Wednesday</option>
+							<option>Thursday</option>
+							<option>Friday</option>
+							<option>Saturday</option>
+						</select>
+					</label>
+					<label for="originTerminal">
+						<select id="originTerminal">
+							<option>--</option>
+						</select>
+					</label>
+					<label for="destinationTerminal">
+						<select id="destinationTerminal">
+							<option>--</option>
+						</select>
+					</label>
+					<button class="createSked__btn" id="createSked__btn">Create Schedule</button>	
+				</form>
+			</div>
+			<div class="card">
+				<h2>Delete A Schedule</h2>
+				<form id="deleteSchedule">
+				<!-- Search for Schedule using Time and Day -->
+					<label for="deleteDay">
+						<span>Day of Schedule</span>
+						<select id="availableDay">
+							<option>--</option>
+							<option>Sunday</option>
+							<option>Monday</option>
+							<option>Tuesday</option>
+							<option>Wednesday</option>
+							<option>Thursday</option>
+							<option>Friday</option>
+							<option>Saturday</option>
+						</select>
+					</label>
+					<label for="deleteTime">
+						<span>Time to be deleted</span>
+						<select id="availableTime">
+							<option>--</option>
+						</select>
+					</label>
+					<button class="deleteSked__btn" id="deleteSked__btn">Delete Schedule</button>
+				</form>
+			</div>
+			<!-- <div class="card">
+				<h2>Add Bus</h2>
+				<form class="addBus" id="addBus">
+					<label for="plateInput">
+						<span>Plate Number: </span>
+						<input type="text" id="plateInput" placeholder="UVA XXXX">
+					</label>
+					<label for="typeInput">
+						<span>Bus Type: </span>
+						<select id="typeInput">
+							<option>R</option>
+							<option>D</option>
+						</select>
+					</label>
+					<label for="seatNumber">
+						<span>Seat Number</span>
+						<input type="number" value="0" id="seatNumber">
+					</label>
+					<button class="addBus__btn" id="addBus__btn">Add Bus</button>	
+				</form>
+			</div>
+			<div class="card">
+				<h2>Delete Bus</h2>
+				<form class="delBus" id="delBus">
+					<label for="plateInput">
+						<span>Plate Number: </span>
+						<input type="text" id="delPlate" placeholder="UVA XXXX">
+					</label>
+					<button class="delBus__btn" id="delBus_btn">Add Bus</button>	
+				</form>
+			</div> -->
+		</main>
+	</body>
+</html>

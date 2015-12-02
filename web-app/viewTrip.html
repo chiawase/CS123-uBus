@@ -21,6 +21,24 @@
 			</nav>
 		</header>
 		<main class="container">
+		<p><a href="index.html"><span class="fa fa-arrow-left fa-2x"></span>&nbsp;Go back</a></p>
+		<h2>Search for Trips</h2>
+			<form class="tripSearch">
+				<label>
+					<span>Search by: </span>
+					<select id="searchOptions" >
+						<option>--</option>
+						<option>Day</option>
+						<option>Date</option>
+						<option>Time</option>
+					</select>
+				</label>
+				<label>
+					<span id="timeError" style="display:none; color: red;">Please follow the format 12:00 AM/PM</span>
+					<input type="text" id="tripSearch" placeholder="Search">
+				</label>
+				<button id="searchBtn"><span class="fa fa-search"></span></button>
+			</form>
 			<ul class="tripList" id="tripList">
 			</ul>
 		</main>

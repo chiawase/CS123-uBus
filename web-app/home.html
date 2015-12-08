@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>uBus | Admin System</title>
+		<meta charset="utf-8">
+		<meta name="description" content="uBus Ticket Reservation System administrator tools.">
+		<link rel="icon" type="image/x-icon" href="img/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="css/rolling.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<script type="text/javascript" src="js/jquery-2.1.4.js"></script>
+		<script src="js/parse-1.6.7.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
+	</head>
+	<body>
+		<header class="header">
+			<a href="index.html" class="header__logo"><img src="img/logo.png" width="40px"></a>
+			<nav class="header__nav" id="navigation">
+				<a href=""></a>
+				<a href=""></a>
+			</nav>
+		</header>
+		<main class="container">
+			<h1 id="welcomeMessage"></h1>
+			<div class="actionbox card" id="tripManagement" style="display:none;">
+			<!-- This is not available when user is a Clerk user -->
+				<h1 class="actionbox__header">Trips Management</h1>
+				<h2>Trips contain information on Schedules and Bus Assignments</h2>
+				<ul class="actionbox__list">
+					<li class="actionbox__listitem"><a href="createTrip.html">Create Trips</a></li>
+					<li class="actionbox__listitem"><a href="viewTrip.html">View All Trips</a></li>
+				</ul>
+			</div>
+			<div class="actionbox card" id="scheduleManagement" style="display:none;">
+			<!-- This is not available when user is a Clerk user -->
+				<h1 class="actionbox__header">Company Management</h1>
+				<h2>Add Schedule templates and buses</h2>
+				<ul class="actionbox__list">
+					<li class="actionbox__listitem"><a href="companyMgmt.html">Company Management</a></li>
+				</ul>
+			</div>
+			<div class="actionbox card" id="customerManagement">
+				<h1 class="actionbox__header">Customer Management</h1>
+				<ul class="actionbox__list">
+					<li class="actionbox__listitem"><a href="reload.html">Reload User Credits</a></li>
+				</ul>
+			</div>
+			<!-- <button onclick="app.searchRole()">Print in Console</button> -->
+			 
+		</main>
+	</body>
+</html>
